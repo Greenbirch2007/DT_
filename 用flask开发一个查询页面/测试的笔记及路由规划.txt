@@ -1,0 +1,26 @@
+http://127.0.0.1:5000/search
+
+根据请求的方法不同，访问是不同的视图函数，完成不同的功能
+
+
+
+
+http://127.0.0.1:5000/showDT
+
+可视化完整的表格
+
+
+
+
+
+http://127.0.0.1:5000/tabledata
+完整的数据库的字段
+
+data = {"A":"Hello!"}
+
+data = {"A":"Hello!","B":"How is it going?","C":3,"D":4}
+
+re.get('http://139.162.19.43:8888/tabledata',params=data).json()
+
+
+

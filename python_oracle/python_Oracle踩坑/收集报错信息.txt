@@ -1,0 +1,17 @@
+1. cx_Oracle.DatabaseError: ORA-12514: TNS:listener does not currently know of service requested in connect descriptor
+
+
+2. cx_Oracle.DatabaseError: ORA-24315: illegal attribute type
+
+
+注意：cx_oracle与oracle客户端的版本匹配   
+
+
+3. 查询Oracle版本
+
+select * from v$version
+
+
+Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+
+

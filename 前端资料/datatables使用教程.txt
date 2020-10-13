@@ -1,0 +1,227 @@
+datatables使用教程
+
+https://blog.csdn.net/qq_37933685/article/details/85144313
+
+bootstrap-datatables使用教程
+介绍
+Datatables是一款jquery表格插件。它是一个高度灵活的工具，可以将任何HTML表格添加高级的交互功能。
+
+分页，即时搜索和排序
+几乎支持任何数据源：DOM， javascript， Ajax 和 服务器处理
+支持不同主题 DataTables, jQuery UI, Bootstrap, Foundation
+各式各样的扩展: Editor, TableTools, FixedColumns ……
+丰富多样的option和强大的API
+支持国际化
+超过2900+个单元测试
+免费开源 （ MIT license ）！ 商业支持
+
+安装配置
+本文代码仓库：https://gitee.com/suwenguang/demo/tree/datatables使用教程
+
+步骤
+
+引入文件 css,jq,datatables
+拿到table对象，执行初始化
+
+
+步骤
+１．引入css,jq,databases
+2.拿到table对象，执行初始化
+
+原理介绍
+
+对table进行渲染，前提table的数据源得有，例子中，可以直接调用
+函数进行渲染
+项目中，多数是结合服务端，采用ajax方式获取和数据源
+
+做法很多，可以ajax异步拿到数据后，进行dom操作，把数据填入table中，
+在进行datatables.ajax.reload()
+
+1.前端准备好静态的表格数据
+2.引入datatables
+3.在js中调用函数渲染
+
+
+前端准备好静态的表格数据
+
+引入datatables
+
+在js中调用函数渲染
+
+$("#t1").dataTable({});
+
+可以自己定义语言选项
+
+设置language 选项
+下面给出详细点的解释，这些是通常能用到的。但是很多时候，项目开发是不需要这么多的。
+
+关键代码
+
+对应仓库的datatables使用教程 分支的 language选项详解
+
+
+设置开发常用选项
+
+适应大部分普通后台管理的需求
+
+ajax异步带参数获取数据源，结合java服务端模式
+
+服务端采用springboot的ssm框架＋
+freemarker视图(类似jsp的东西)＋
+pagehelper分页
+
+
+前端的步骤
+
+1.开启datatables的一些参数，serverSide:true
+2. 配置ajax源，即后端接口url
+3. 渲染，调用函数　datatables.ajax.reload()
+
+后端接口的步骤
+１．编写接口
+２．编写mapper
+3. 返回json数据
+
+注意：前后端一定要定义好数据格式，还有传输模式
+这里统一使用json
+
+这里使用的静态末班引擎freemarker
+
+
+html只要表头，其他样式不啊哟
+
+
+主要：开启服务器模式；开启ajax获取数据；设置数据
+
+这里还用到了render函数，做数据处理，如果会用js的可以了解一些，
+不懂就把它当成回调函数
+
+
+sprintboot服务端
+
+controller层
+DatatableController.java
+
+当你开启服务器模式serverside,datatables会主动提交一些参数过来
+
+
+返回给datatables的数据有要求，封装一个datatable的类
+
+DT自动请求的参数(Sent parameters)
+当开启了服务器模式时，DataTables会发送如下参数到服务器
+
+名称　　类型　　　　　　　　描述
+
+draw  integerJS      绘制计数器。这个用来确保Ajax从服务器返回的是对应的
+		  	(ajax是异步的，因此返回顺序是不确定的)
+			要求在服务器接收到此参数后再返回
+
+start  integerJS     第一条数据的起始位置，比如0代表第一条数据
+length  integerJS   告诉服务器每页显示的条数，这个数字会等于返回的data
+			集合的记录数，
+			可能会大于因为服务器没有那么多数据，这个也可能是-11,
+			代表需要返回全部数据(尽管这个和服务器处理的理念有些违背)
+
+
+服务器需要返回的数据(Returend data)
+
+
+一旦DataTables发送了请求，上面的参数就会传送给服务器，那么你需要接受
+到这些参数并做相应的逻辑处理然后按照下面的格式讲解好的json数据返回
+(不是每个参数都需要接受处理，根据自己的业务需要)
+
+
+名称　　   类型　　　　　　　　　　　　描述
+
+draw    integerJS      必要。Datatables发送的draw是多少那么服务器就
+			返回多少。作者处于安全的考虑，强烈要求把这个转换
+			成整形，即数字后再返回，而不是纯粹的接受
+			然后返回，这里为了方式跨站脚本(XSS)攻击
+
+
+recordTotal  integerJS     必要。即没有过滤的记录数(数据库里总共记录数)
+
+recordFiltered  integerJS  必要。过滤后的记录数(如果没有接收到前台的过滤
+				提哦啊哦见，则返回的是过滤后的记录数)
+
+data         arrayType    必要。表中需要显示的数据。这是一个对象数组，也可以只是
+				数组，区别在于纯数组前台就不需要用
+			columns绑定数据，会自动按照顺序去显示，而　	
+			对象数组则需要使用columns绑定数据才能
+			正常显示。注意这个data的名称可以由
+			ajaxOption ajax不定时一讲的 ajax.dataSrcOption
+			ajax.dataSrc 1不定时一讲　ajax.dataSrc 2
+				不定时一讲控制
+
+error     stringJS       可选。可以定义一个错误来描述服务器出了问题后的
+				友好提示
+
+
+service层
+
+UserServiceImpl.java
+
+这里使用的是tk.mybatis做通用service和通用mapper
+
+把datatables传过来的参数start和length作为pagehelper的offset和pageSize
+
+dao层
+
+UserMapper.java
+
+UserMapper.xml
+
+数据库文件
+
+测试数据的话，已经写了一个接口放在controller
+
+测试数据的话，我已经写了一个接口放在controller那里了。
+
+具体查看代码仓库：datatables使用教程分支的 ajax异步带参数获取数据源
+
+
+分页和数据展示都做好了，现在来做一个搜索条件，项目来讲，搜索这个功能是必不可少
+
+
+搜索条件，整合服务端，利用mybatis动态
+
+
+前端步骤：
+
+１．添加搜索条件输入框和搜索框
+2.获取搜索条件输入
+３．添加datatables的额外参数，传给服务端接口
+
+
+服务端步骤
+
+１．编写controller接口。接收搜索参数，处理完，返回datatables对象(自己封装)
+２．编写service业务逻辑，处理数据，返回给controller
+3.　编写dao,自定义sql筛选数据，返回给service
+
+
+示例代码
+
+前端
+
+index.ftl
+
+添加搜索条件输入框和搜索框
+
+添加datatables的额外参数，传给服务端接口
+
+index.js
+
+
+服务端
+
+controller层接收参数
+
+还是原来的代码，只不过这次前端是会有值传过来了。这个值我一般会封装到vo对象里面，这里我封装到user里面
+
+具体查看代码仓库：datatables使用教程分支的 搜索条件
+
+效果截图
+
+
+

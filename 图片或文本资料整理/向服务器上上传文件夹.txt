@@ -1,0 +1,7 @@
+从本地文件目录向服务器上上传
+
+
+scp -r /home/w/Recodt/_static_html   root@139.162.19.43:/root/env
+
+
+可视化表格在远程linux上部署成功！

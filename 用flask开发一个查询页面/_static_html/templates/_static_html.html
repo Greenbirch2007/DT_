@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!----------多列同时排序---------->
+    <!-- 加载 Jquery -->
+    <script src="../static/js/jquery.min.js"></script>
+
+<!--  -->
+    <!-- 加载 Datatables -->
+    <link href="../static/css/jquery.datatables.min.css" rel="stylesheet" />
+
+
+    <!-- 表格内容居中 -->
+    <link href="../static/css/js_c.css" rel="stylesheet" />
+    <script src="../static/js/jquery.datatables.min.js"></script>
+   
+
+</head>
+<body>
+<div class="table2excel">
+    <table id="exam" class="display"  width="90%" style= margin:auto>
+        <thead>
+            <tr>
+              <th>Column A</th>
+              <th>Column B</th>
+              <th>Column C</th>
+              <th>Column D</th>
+            </tr>
+          </thead>
+        </table>
+</div>
+
+
+<input class="btn btn-warning" id="btn-export" type="button"  value="点击导出">
+
+
+
+<!--<script src="./jquery.min.js"></script>-->
+<script src="../static/js/jquery.table2excel.js"></script>
+
+<!-- <script src="../static/js/Chinese.js"></script> -->
+
+
+<!------下面是导出模块----->
+<script>
+    $(function() {
+        $("#btn-export").click(function(){
+            $(".table2excel").table2excel({
+                // 不被导出的表格行的CSS class类
+                exclude: ".noExl",
+                // 导出的Excel文档的名称
+                name: "Excel Document Name",
+                // Excel文件的名称
+                filename: "TableData",
+                //文件后缀名
+                fileext: ".xls",
+                //是否排除导出图片
+                exclude_img: false,
+                //是否排除导出超链接
+                exclude_links: false,
+                //是否排除导出输入框中的内容
+                exclude_inputs: false
+            });
+        });
+    });
+</script>
+ <!-----------上面是相当于继承框架，下面就要进行加载接口数据了-->
+ <script src="../static/js/gettableDT.js"></script>
+
+    
+
+
+
+</body>
+</html>

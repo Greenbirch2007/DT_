@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>大数据成果共享</title>		
+        <link href="../static/css/reset.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="../static/css/main.css"/>
+        
+        <!--布局样式引入 结束-->
+        
+        <!----------多列同时排序---------->
+    	<!-- 加载 Jquery -->
+    	<script src="../static/js/jquery.min.js"></script>
+
+		<!--  -->
+    	<!-- 加载 Datatables -->
+    	<link href="../static/css/jquery.datatables.min.css" rel="stylesheet" />
+
+
+    	<!-- 表格内容居中 -->
+    	<link href="../static/css/js_c.css" rel="stylesheet" />
+    	<script src="../static/js/jquery.datatables.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<!---top begin-->
+			<div class="top ct">
+				<ul>
+                	<li class="logo"><a href="http://127.0.0.1:5000"><img src="../static/img/logo.jpg"/></a></li>
+                	<li><a href="">大数据成果共享工具</a></li>
+                	<div class="top_nav">
+                		<ul>
+                			<li class="fl"><a href="">登录</a></li>
+                			<li class="fl"><a href="">注册</a></li>                			
+                		</ul>
+                	</div>
+            	</ul>
+			</div>
+			<!---top end-->
+			<!---nav begin-->
+			<nav class="nav ct">
+				<ul>
+					<li class="fl">
+						<a href="http://127.0.0.1:5000">功能模块A</a>
+						<div class="ejml">
+							<ul>
+								<li class="fl"><a href="http://127.0.0.1:5000/showDT">功能模块1</a></li>
+								<li class="fl"><a href="">功能模块2</a></li>
+								<li class="fl"><a href="">功能模块3</a></li>
+							</ul>
+						</div>
+					</li>
+            		<li class="fl">
+            			<a href="">功能模块B</a>
+            			<div class="ejml">
+							<ul>
+								<li class="fl"><a href="">功能模块4</a></li>
+								<li class="fl"><a href="">功能模块5</a></li>
+								<li class="fl"><a href="">功能模块6</a></li>
+							</ul>
+						</div>
+            		</li>
+            		<li class="fl">
+            			<a href="">功能模块C</a>
+            			<div class="ejml">
+							<ul>
+								<li class="fl"><a href="">功能模块7</a></li>
+								<li class="fl"><a href="">功能模块8</a></li>
+								<li class="fl"><a href="">功能模块9</a></li>
+								<li class="fl"><a href="">功能模块19</a></li>
+								<li class="fl"><a href="">功能模块20</a></li>
+								<li class="fl"><a href="">功能模块21</a></li>
+							</ul>
+						</div>
+            		</li>
+            		<li class="fl">
+            			<a href="">功能模块D</a>
+            			<div class="ejml">
+							<ul>
+								<li class="fl"><a href="">功能模块10</a></li>
+								<li class="fl"><a href="">功能模块11</a></li>
+								<li class="fl"><a href="">功能模块12</a></li>
+								<li class="fl"><a href="">功能模块16</a></li>
+							</ul>
+						</div>
+            		</li>
+            		<li class="fl">
+            			<a href="">功能模块E</a>
+            			<div class="ejml">
+							<ul>
+								<li class="fl"><a href="">功能模块13</a></li>
+								<li class="fl"><a href="">功能模块14</a></li>
+								<li class="fl"><a href="">功能模块15</a></li>
+								<li class="fl"><a href="">功能模块17</a></li>
+								<li class="fl"><a href="">功能模块18</a></li>
+							</ul>
+						</div>
+            		</li>
+				</ul>
+			</nav>
+			<!---nav end-->
+			<!---主题内容 begin-->
+			<div class="fun1_main ct">
+				<!--数据表格显示 开始-->
+				<div class="table2excel" style= "margin:auto;width: 98%;">
+					<table id="exam" class="display">
+						<thead>
+							<tr>
+             					<th>Column A</th>
+              					<th>Column B</th>
+              					<th>Column C</th>
+              					<th>Column D</th>
+            				</tr>
+						</thead>
+					</table>
+					<input class="btn db btn-warning fl" id="btn-export" type="button"  value="">
+				</div>
+				
+				<!--数据表格显示结束-->
+			</div>
+			<!---主题内容 end-->
+			<!---footer begin-->
+			<footer class="fun1_footer ct">
+				<p>Copyright &copy; 2020 xxx.com All Rights Reserved　版权所有 国家电网</p>
+			</footer>
+			<!---footer end-->
+			<script src="../static/js/jquery.table2excel.js"></script>
+		<!------下面是导出模块----->
+		<script>
+    		$(function() {
+       		 $("#btn-export").click(function(){
+       		     $(".table2excel").table2excel({
+             		   // 不被导出的表格行的CSS class类
+            		    exclude: ".noExl",
+             		   // 导出的Excel文档的名称
+            		    name: "Excel Document Name",
+                		// Excel文件的名称
+                		filename: "TableData",
+                		//文件后缀名
+                		fileext: ".xls",
+                		//是否排除导出图片
+                		exclude_img: false,
+                		//是否排除导出超链接
+                		exclude_links: false,
+                		//是否排除导出输入框中的内容
+                		exclude_inputs: false
+            		});
+        		});
+    		});
+		</script>
+		<!-----------上面是相当于继承框架，下面就要进行加载接口数据了-->
+ 		<script src="../static/js/gettableDT.js"></script>
+		</div>
+	</body>
+</html>

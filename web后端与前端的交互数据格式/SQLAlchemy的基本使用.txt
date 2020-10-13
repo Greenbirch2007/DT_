@@ -1,0 +1,117 @@
+SQLAlchemy的基本使用
+
+https://www.cnblogs.com/value-code/p/8893631.html
+
+sqlalchemy是一种ORM(Object-Relational Mapping)框架，用来将关系型数据库映射到对象上。该框架建立
+在DB API之上，将类和对象转化成sql,然后使用api执行sql并获取执行结果
+
+二、组成
+Schema/Types，架构和类型
+SQL Exprression Language，SQL表达式语言
+Engine，框架的引擎
+Connection Pooling ，数据库连接池
+Dialect，选择连接数据库的DB API种类
+
+
+三、基本使用
+1.流程：
+（1） 使用者通过ORM对象提交命令
+(2) 命令交给sqlalchemy core （Schema/Types SQL Expression Language）转换成SQL
+　　3）使用 Engine/ConnectionPooling/Dialect 进行数据库操作
+
+　　　　　　3.1）匹配使用者事先配置好的egine
+
+　　　　　　3.2）egine从连接池中取出一个链接 
+
+　　　　　　3.3）基于该链接通过Dialect调用DB API，将SQL转交给它去执行
+
+　SQLAlchemy本身无法操作数据库，其必须以来pymsql等第三方插件，Dialect用于和数据API进行交流，根据配置文件的不同调用不同的数据库API，从而实现对数据库的操作，如：
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+MySQL-Python
+    mysql+mysqldb://<user>:<password>@<host>[:<port>]/<dbname>
+     
+pymysql
+    mysql+pymysql://<username>:<password>@<host>/<dbname>[?<options>]
+     
+MySQL-Connector
+    mysql+mysqlconnector://<user>:<password>@<host>[:<port>]/<dbname>
+     
+cx_Oracle
+    oracle+cx_oracle://user:pass@host:port/dbname[?key=value&key=value...]
+
+2. 启用
+
+　　2、启用
+　　　　如果我们不依赖于SQLAlchemy的转换而自己写好sql语句，就意味着我们可以直接从第3个阶段开始执行了，事实上正是如此，我们完全可以只用SQLAlchemy执行纯sql语句，如下：
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+from sqlalchemy import create_engine
+ 
+# 1 准备
+# 需要事先安装好pymysql
+# 配置好要使用的数据库，这里用MySQL为例
+# 需要事先创建好数据库:create database db1 charset utf8;
+ 
+# 2 创建引擎
+egine=create_engine('mysql+pymysql://root@127.0.0.1/db1?charset=utf8')
+ 
+# 3 执行sql
+# egine.execute('create table if not EXISTS user(id int PRIMARY KEY auto_increment,name char(32));')
+# cur=egine.execute('insert into user values(%(id)s,%(name)s);',name='ming',id=3)
+ 
+# 4 查询
+cur=egine.execute('select * from user')
+ 
+cur.fetchone() #获取一行
+cur.fetchmany(2) #获取多行
+cur.fetchall() #获取所有行
+
+
+3. ORM
+1.创建表
+2.操作表
+
+# 创建一个Base类，后面床架你的每个包都需要继承这个类
+
+# 创建单表：业务线
+# 多对一：多个服务可以属于一个业务线，多个业务线不能包含同一个服务
+# 一对一：一种角色只能管理一条业务先，一条业务线只能被一种角色管理
+
+(2) 操作表
+
+表结构
+
+
+
+
+

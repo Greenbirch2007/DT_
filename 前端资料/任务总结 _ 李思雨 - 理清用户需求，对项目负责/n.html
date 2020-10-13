@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>datatable 例子</title>
+    <!--第一步：引入Javascript / CSS （CDN）-->
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="引入bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="引入dataTable.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./n.css">
+
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="引入jquery.js"></script>
+    <style>
+        .box{width: 1000px;margin:100px auto}
+        #table_id_example thead{background: #3174c7;color: white;}
+        #table_id_example thead tr th,tbody{text-align: center;}
+    </style>
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="引入jquery.dataTable.js"></script>
+    <script type="text/javascript" charset="utf8" src="引入dataTable.bootstrap.js"></script>
+
+
+</head>
+<body>
+
+<script>
+    function getPic() {
+        $("#pic").attr("src","/wudavote/vote/pic?flag="+Math.random());
+    }
+
+    localStorage.setItem("test","测试");
+    localStorage.getItem("test")="测试";
+
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+    $('#example').dataTable({
+        'createRow':function (row,data,dataIndex) {
+            if (data[4] == "A"){
+                $(row).addClass('important');
+            }
+        }
+    });
+    $('#example').dataTable({
+        'drawCallback':function (settings) {
+            var api = this.api();
+            //输出当前页的数据到浏览器控制台
+            console.log(api.rows({page:'current'}).data());
+        }
+    });
+
+    $('#example').dataTable({
+        'rowCallback':function (row,data) {
+            if(data.grade=="A"){
+                $('td:eq(4)',row).html('<b>A</b>');
+            }
+        }
+    });
+    //　引入好layer.js后，直接用即可
+    
+</script>
+</body>
+</html>

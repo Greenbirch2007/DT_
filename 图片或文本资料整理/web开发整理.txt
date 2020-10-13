@@ -1,0 +1,82 @@
+
+
+
+
+1. 创建虚拟测试表，并模拟插入５０００条数据
+
+
+create database DT;
+
+create table Demo_BYQ(
+id int not null primary key auto_increment,
+BYQ_Num varchar(10),
+XL_Num varchar(10)
+) engine=InnoDB  charset=utf8;
+
+
+
+我是实际运行表数据
+基准表
+测试总表
+添加一些错误数据
+
+＃　先测试30 ----- 10匹配的数据量，把脚本先写好！
+然后再优化效率的问题
+
+把匹配查询和插入新表不要在同一个函数里
+
+
+异步查询和插入mysql ,能够提高效率！
+
+测试表１　　１－３００００　，共30000万条
+测试表２　　１，３，５....　共３０００条
+
+
+
+下面sql满足的条件：
+1. 查询
+select Demo_BYQ1.BYQ_Num as q1_num ,Demo_BYQ1.XL_Num as q1_xl,Demo_BYQ1.item as q1_item from Demo_BYQ1,Demo_BYQ2 where Demo_BYQ1.BYQ_Num = Demo_BYQ2.BYQ_Num  EXISTS Demo_BYQ1.XL_Num <> Demo_BYQ2.XL_Num;
+
+
+ where  Demo_BYQ1.BYQ_Num = Demo_BYQ2.BYQ_Num and  Demo_BYQ1.XL_Num <> Demo_BYQ2.XL_Num;
+
+select 
+
+
+select BYQ_Num,XL_Num,item from Demo_BYQ1 where BYQ_Num="f" and 
+
+
+select Demo_BYQ1. from Demo_BYQ1 
+
+not in (select XL_Num  from Demo_BYQ2) ;
+
+上面只查询了一条记录！
+因为
+
+
+
+select Demo_BYQ1.id as f_id ,Demo_BYQ1.BYQ_Num as q1_num ,Demo_BYQ1.XL_Num as q1_xl,Demo_BYQ1.item as q1_item from Demo_BYQ1 where  Demo_BYQ1.BYQ_Num  in (select BYQ_Num  from Demo_BYQ2)  or Demo_BYQ1.XL_Num not in (select XL_Num  from Demo_BYQ2) ;
+
+
+
+
+(Demo_BYQ1.XL_Num not  in (select BYQ_Num  from Demo_BYQ2) and  where
+
+select Demo_BYQ2.BYQ_Num as q2_num, Demo_BYQ2.XL_Num as q2_xl from Demo_BYQ2;
+
+
+,Demo_BYQ2 where q1_num=q2_num;
+
+
+２.　用Flask写后端的接口　，设计url和对应关系
+
+
+
+３．　寻找前端合适的表格化界面(bootstrap,vue.js等)
+
+
+
+４. 再在flask基础上增加导出csv数据功能的模块。
+
+
+

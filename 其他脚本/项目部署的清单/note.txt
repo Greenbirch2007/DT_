@@ -1,0 +1,13 @@
+
+
+1. 在centos环境下开始部署
+2. 在windows环境下部署
+
+
+flask,ngnix,tonado部署在windows上做准备！
+
+启动 run.py 和 nginx，打开浏览器：
+
+输入nginx的IP和端口指向了flask项目
+
+还要做压力并发测试！

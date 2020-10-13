@@ -1,0 +1,168 @@
+Python Flask 实现移动端应用接口（API）
+
+https://www.cnblogs.com/cleven/p/10979068.html
+
+web应用的一个趋势：业务逻辑被越来越多地移动到客户端，服务器的主要功能(有时是唯一哦功能)是为客户端
+提供数据存取服务的。在这种模式中，服务器编程了web服务或应用编程接口(api)
+
+
+flask是开发web服务的理想框架，因为flask天生轻量级
+
+
+
+
+一、项目简介
+
+使用Flask实现一个接口(API),提供给移动端(ios应用)调用，实现首页数据获取。
+同时展示了一种较为通用的项目架构及目录结构
+
+
+接口功能只是最基本实现，很多功能需要在真是项目中进行完善：包括身份验证，
+全量的错误处理，魂村与备份，负载与并发，复杂的数据库操作，数据库迁移，
+日志，版本迭代管理等
+
+
+服务端部署只是使用到Flask自带的Web服务器
+
+客户端页面如下，首页接口返回数据包括：轮播(两个条目) + 下方三个分组（每个分组4个条目）
+
+二、环境准备
+1.服务端
+2.其他端
+3. 虚拟环境和库
+
+api蓝本： __init__.py  errors.py  views.py 视图函数(路由)
+
+静态资源与模板  static, templates
+
+
+app----> __init__.py app模块初始化
+
+
+models.py  数据库表对应的模型
+
+
+migrations tests  数据库迁移和单元测试
+
+config.py  应用启动
+
+
+(1) app文件夹为业务代码的存放处，包括视图+模型+静态文件，也叫作应用包
+(2) static,templates,migrations,tests
+（3） config.py,manage.py是启动应用和配置应用的关键
+(4)  requirements.txt里面存放当前环境使用的到的库，将项目迁移到别的服务器(环境)
+时，可以通过这个文件，快速导入依赖的所有库
+
+
+pip3 freeze -l > requirements.txt 导出
+pip3 install -r requirements.txt 导入
+
+1. 从manage.py 开始
+
+每个flask项目，必须有一个应用实例。把实例的创建，推迟到了init中定义的
+create_app方法(工厂函数)
+2. 关于debug,在这种模式下，开发服务器默认会加载两个工具：重载器和调试器
+
+启用重载器后，flask会监视项目中的所有源码文件，发现变动时自动重启服务器
+在开发过程中每次调试都会重启服务器
+
+3. from app import create_app, 会去app模块中，找去__init__.py，将其中
+的对应内容引用进来
+
+
+2. app模块中的__init__.py
+
+（1） 创建应用实例，并且导入config.py文件，来配置app
+(2) 创建数据库实例，然后一定要在create_app中初始化db.init_app(和app关联起来)
+（3） 创建数据库表：先创建模型类(models.py中)，然后通过ORM(flask_sqlalchemy)
+映射为数据库中的表，一定注意导入模型的时机
+(4) 注册蓝本，此处命名为api，蓝本实例的创建在api模块中的__init__.py中
+（5） 关于蓝本的补充
+
+将视图方法模块化，最好的方式是根据功能将路由合理的划分到不同的文件中
+转换成应用工厂函数的操作(通过create_app创建应用实例)让定义路由变复杂了，
+吓着你应用在运行时创建，只有调用create_app()之后才能使用app.route装饰器，
+这时定义路由太晚。使用蓝本，在蓝本中定义的路由处于休眠状态，
+直到蓝本注册到应用上之后，它们才真正成为应用的一部分
+
+3. api蓝本模块中的__init__.py
+
+# 两个参数分别指定蓝本的名字，蓝本所在的包或模块
+
+
+导入路由模块，错误处理模块，将其和蓝本关联起来
+
+（1） 应用的路由由保存在包里的views.py,errors.py摸中
+（2） 导入这两个模块就能把路由和蓝本关联起来
+(3) 注意，这些模块在app/__init__.py脚本的末尾导入api蓝本，
+所以除非循环引用出现在定义api之后，否则会导致导入出错
+
+
+
+4. 配置文件config.py
+
+(1) 给配置文件设置一个基类，让不同的配置环境，继承自他
+(2) 关于flask-sqlalchemy的一些皮遏制选项列表
+(3) 配置文件中可以写入其他各种配置信息，比如以后使用的redis,MongoDB,甚至
+一些业务代码中使用到的配置相关的"常量"也可以定义在之类
+
+
+5. 模型文件 models.py
+
+（1） 使用的是"视频"模型，相应表的字段已经声明
+(2) 关于flask-sqlalchemy的模型属性类型
+（3） 常用sqlalchemgy列选项
+primary_key,unique,index,nullable,default
+
+(4) 常用sqlalchemy关系选项
+
+backref,primaryjoin,lazy,uselist,order_by,secondary,secondaryjoin
+
+6. 业务的核心视图函数views.py
+
+
+（1） 这个视图，包括一个路由：获取ios应用首页的数据
+(2) getHomepageData方法是models.py中定义的一个函数，用来查询首页数据
+
+
+7. 在Models.py里添加查询函数
+
+
+（1）使用到了flask_sqlalchemy的数据库查询方法，模型类.query即可查询模型对应的
+表。
+
+（2） abort(404) 将请求阻断，并响应flask的errorthandler,
+在errors.py中实现了errorhandler装饰器的响应函数。
+errors.py模块，也是在蓝本api中注册过的，所以可以响应abort抛出的错误
+
+(3) 运行是会抛出一个完整的json
+
+
+8.错误处理模块 errors.py
+
+使用errorhandler装饰器，自由蓝本才能触发处理程序
+要想触发全局的错误处理程序，要用app_errorhandler
+
+
+
+四 运行与测试
+
+
+服务端的代码处理万
+
+1.在本地，导出所有使用的库：pip3 free -i > requirements.txt
+然后git提交代码，服务端同步代码，并且在虚拟环境中安装好所有包：pip3 install -r requirements.txt
+
+　2、启动应用：python3 manage.py ，如下，成功。
+
+　3、启动成功之后，应该在数据库（cleven_development）中创建出了videos这张表，我们用Navicat连接数据库，并添加一些测试数据：
+
+　　图片用的是公司项目的资源，打个码~，大家可以随便找点图片，放到自己的服务器上进行测试
+　4、postman或者浏览器先测试一下 ： http://服务器地址:9001/api/v1.0/homePage/，得到数据应该是
+
+　　里面有一些小问题需要处理，比如<null>这种情况（iOS这边对返回的空对象会解析成NSNull对象，打印出来就是<null>，理论上后端不应该把空对象返回给移动端），咱们就不单独处理了。
+
+　5、xcode打开app，应该可以拿到数据并展示了，good ~ 
+
+ 
+

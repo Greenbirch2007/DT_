@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8"><link rel="icon" href="https://jscdn.com.cn/highcharts/images/favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* css 代码  */
+        </style>
+        <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+        <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+        <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+    </head>
+    <body>
+        <div id="container" style="min-width:400px;height:400px"></div>
+        <script>
+            var chart = Highcharts.chart('container',{
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '包含负值的柱形图'
+    },
+    xAxis: {
+        categories: ['苹果', '橘子', '梨', '葡萄', '香蕉']
+    },
+    series: [{
+        name: '小张',
+        data: [5, 3, 4, 7, 2]
+    }, {
+        name: '小彭',
+        data: [2, -2, -3, 2, 1]
+    }, {
+        name: '小潘',
+        data: [3, 4, 4, -2, 5]
+    }]
+});
+        </script>
+    </body>
+</html>

@@ -1,0 +1,352 @@
+题目描述
+计算字符串最后一个单词的长度，单词以空格隔开。
+输入描述:
+一行字符串，非空，长度小于5000。
+
+输出描述:
+整数N，最后一个单词的长度。
+
+s = "Hello World"
+
+def lengthOfLastWord(s):
+    l = s.split()
+    if len(l) == 0:
+        
+        pass
+    else:
+        return len(l[-1])
+
+print(lengthOfLastWord(s))
+
+
+
+题目描述
+写出一个程序，接受一个由字母和数字组成的字符串，和一个字符，然后输出输入字符串中含有该字符的个数。不区分大小写。
+
+输入描述:
+第一行输入一个有字母和数字以及空格组成的字符串，第二行输入一个字符。
+
+输出描述:
+输出输入字符串中含有该字符的个数。
+
+
+
+strs = input().lower()
+s = input().lower()
+print(strs.count(s))
+
+
+
+明明想在学校中请一些同学一起做一项问卷调查，为了实验的客观性，他先用计算机生成了N个1到1000之间的随机整数（N≤1000），对于其中重复的数字，只保留一个，把其余相同的数去掉，不同的数对应着不同的学生的学号。然后再把这些数从小到大排序，按照排好的顺序去找同学做调查。请你协助明明完成“去重”与“排序”的工作(同一个测试用例里可能会有多组数据，希望大家能正确处理)。
+
+
+
+Input Param
+
+n               输入随机数的个数
+
+inputArray      n个随机整数组成的数组
+
+
+Return Value
+
+OutputArray    输出处理后的随机整数
+
+import random
+s=set([])
+for i in range(int(input('N:'))):
+     num=random.randint(1,1000)
+     s.add(num)
+print(s)
+print(sorted(s))
+print('去重后的元素个数为%d' %len(s))
+
+
+题目描述
+•连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；
+•长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。
+输入描述:
+连续输入字符串(输入2次,每个字符串长度小于100)
+
+输出描述:
+输出到长度为8的新字符串数组
+
+
+str1 = input()
+str2 = input()
+
+
+def string_out(str):
+    if len(str) <= 8:
+        print(str + "0" * (8 - len(str)))
+    else:
+        while len(str) > 8:
+            print(str[:8])
+            str = str[8:]
+        print(str + "0" * (8 - len(str)))
+    return
+
+
+
+题目描述
+写出一个程序，接受一个十六进制的数，输出该数值的十进制表示。（多组同时输入 ）
+
+输入描述:
+输入一个十六进制的数值字符串。
+
+输出描述:
+输出该数值的十进制字符串。
+
+
+string3 = 'FFF'
+print('十六进制字符串转换成十进制数为：'，int(string1,16))
+
+
+
+写出一个程序，接受一个正浮点数值，输出该数值的近似整数值。如果小数点后数值大于等于5,向上取整；小于5，则向下取整。
+
+
+import math
+
+x = float(input())
+
+def fuc(x):
+    if 10*(x-int(x)) >= 5:
+        x = math.ceil(x)
+    else:
+        x = math.floor(x)
+    return x
+
+print(fuc(x))
+
+
+
+
+
+
+数据表记录包含表索引和数值(int范围的整数),请对表索引相同的记录进行合并
+
+
+num = int(input())
+ 
+def change(num):
+    key_value = {}
+    for i in range(num):
+        key,value = input().split(' ')
+        key = int(key)
+        value = int(value)
+        if(key in key_value):
+            key_value[key]+= value
+        else:
+            key_value[key] = value
+    for x,y in key_value.items():
+        print(x,y)
+change(num)
+
+输入一个int型整数，按照从右向左的阅读顺序，返回一个不含重复数字的新的整数
+
+
+num = input()
+l = list(reversed(num))
+result = []
+for i in l:
+    if i not in result:
+        result.append(i)
+print("".join(result))
+
+
+编写一个函数,计算字符串中含有的不同字符的个数。字符在ACSII码范围内(0~127),换
+
+str = input()
+str_list = set(list(str))
+countchar = 0
+for c in str_list:
+    if ord(c) > 0 and ord(c) < 128:
+        countchar += 1
+print(countchar)
+
+
+输入一个整数，将这个整数以字符串的形式逆序输出
+
+程序不考虑负数的情况，若数字含有0，则逆序形式也含有0，如输入为100，则输出为001
+
+print(input()[::-1])
+
+写出一个程序，接受一个字符串，然后输出该字符串反转后的字符串。例如
+
+
+s = input()
+temp = list(s)
+temp.reverse()
+print("".join(temp))
+
+将一个英文语句以单词为单位逆序排放。例如“I am a boy”，逆序排放后为“boy a am I”
+所有单词之间用一个空格隔开，语句中除了英文字母外，不再包含其他字符
+
+
+
+list_number = list(input().split(' ')) #由于reverse无法对字符串进行操作，故对输入字符串以空格为单位分割，然后转为列表
+list_number.reverse() 
+print(" ".join(list_number)) #以" "为单位对列表中的单词进行组合为字符串
+
+
+
+输入第一行为一个正整数n(1≤n≤1000),下面n行为n个字符串(字符串长度≤100),字符串中只含有大小写字母
+
+
+row = int(input())
+words = []  #创建空列表
+for i in range(row):  #使用range进行循环次数
+    words.append(input()) #添加输入的字符串
+words.sort() #由于python中的sort()函数排序后就是以字典排序的形式进行排序，则使用sort()函数即可
+for word in words:
+    print(word)
+
+
+输入一个int型的正整数，计算出该int型数据在内存中存储时1的个数。
+
+
+print(bin(int(input())).count('1'))#如果是计算0的个数，需要另行处理，因为bin把数字转为二进制后在二进制的前面会有0b，如数字8：0b1000，所以计算0需要减去1
+
+
+
+有这样一道智力题：“某商店规定：三个空汽水瓶可以换一瓶汽水。小张手上有十个空汽水瓶，她最多可以换多少瓶汽水喝？”答案是5瓶，方法如下：先用9个空瓶子换3瓶汽水，喝掉3瓶满的，喝完以后4个空瓶子，用3个再换一瓶，喝掉这瓶满的，这时候剩2个空瓶子。然后你让老板先借给你一瓶汽水，喝掉这瓶满的，喝完以后用3个空瓶子换一瓶满的还给老板。如果小张手上有n个空汽水瓶，最多可以换多少瓶汽水喝？
+
+
+while True:
+    try:
+        a=int(input())
+        if a !=  0:
+            print(a//2)   
+    except:
+        break
+
+
+原理：ip地址的每段可以看成是一个0-255的整数，把每段拆分成一个二进制形式组合起来，然后把这个二进制数转变成
+一个长整数。
+举例：一个ip地址为10.0.3.193
+每段数字             相对应的二进制数
+10                   00001010
+0                    00000000
+3                    00000011
+193                  11000001
+组合起来即为：00001010 00000000 00000011 11000001,转换为10进制数就是：167773121，即该IP地址转换后的数字就是它了。
+
+的每段可以看成是一个0-255的整数，需要对IP地址进行校验
+
+
+
+
+def binint(a):
+    c=''
+    for i in a:
+        c+=bin(int(i)).replace('0b','').rjust(8,'0')
+    return(int(c,2))
+ 
+def intbin(b):
+    b=bin(b).replace('0b','').rjust(32,'0')
+    c=''
+    for i in range(4):
+        c+=str(int(b[i*8:(i+1)*8],2))+'.'
+    c=c[:-1]
+    return c
+while True:
+    try:
+        a=input().split('.')
+        b=int(input())
+        print(binint(a))
+        print(intbin(b))
+    except:
+        break
+
+
+
+解题思路：需要有字符串和密印对应关系的，注意大小写的区别
+
+1去掉输入key的重复值  
+2生成密匙，主要是26个字母，包括key和不包含key的其他字母，按key在前，其他字母在后排列  
+3利用密匙和明文对应关系，考虑大小写，空格等情况，得到密文
+
+while True:
+    try:
+        key = input()
+        password = input()
+        t = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        l = []
+        result = []
+        if not key:
+            print(password)
+        if not password:
+            print('')
+        for i in key.upper():
+            if i not in l:
+                l.append(i)
+        for i in range(26):
+            if t[i] not in l:
+                l.append(t[i])
+        for i in password:
+            if i.islower():
+                ind=t.index(i.upper())
+                result.append(l[ind].lower())
+            elif i.isupper():
+                ind = t.index(i)
+                result.append(l[ind])
+            else:
+                result.append(i)
+        print(''.join(result))
+    except:
+        break
+
+
+
+密码是我们生活中非常重要的东东，我们的那么一点不能说的秘密就全靠它了。哇哈哈. 接下来渊子要在密码之上再加一套密码，虽然简单但也安全。
+
+假设渊子原来一个BBS上的密码为zvbo9441987,为了方便记忆，他通过一种算法把这个密码变换成YUANzhi1987，这个密码是他的名字和出生年份，怎么忘都忘不了，而且可以明目张胆地放在显眼的地方而不被别人知道真正的密码。
+
+他是这么变换的，大家都知道手机上的字母： 1--1， abc--2, def--3, ghi--4, jkl--5, mno--6, pqrs--7, tuv--8 wxyz--9, 0--0,就这么简单，渊子把密码中出现的小写字母都变成对应的数字，数字和其他的符号都不做变换，
+
+声明：密码中没有空格，而密码中出现的大写字母则变成小写之后往后移一位，如：X，先变成小写，再往后移一位，不就是y了嘛，简单吧。记住，z往后移是a哦。
+
+输入描述:
+
+输入包括多个测试数据。输入是一个明文，密码长度不超过100个字符，输入直到文件结尾
+
+
+password = ''
+while True:
+    try:
+        ori_s = input()
+        
+        for c in ori_s:
+            if c.isupper():
+                if c is not 'Z':
+                    password += chr(ord(i.lower()) + 1)
+                elif c is 'Z':
+                    password += 'a'
+            elif c.islower():
+                if c in 'abc':
+                    password += '2'
+                elif c in 'def':
+                    password += '3'
+                elif c in 'ghi':
+                    password += '4'
+                elif c in 'jkl':
+                    password += '5'
+                elif c in 'mno':
+                    password += '6'
+                elif c in 'pqrs':
+                    password += '7'
+                elif c in 'tuv':
+                    password += '8'
+                elif c in 'wxyz':
+                    password += '9'
+            elif c.isdigit():
+                password += c
+    except:
+        break
+print(password.strip())
+
+
+chr()方法:将十进制数转化为基础字符
+
+ord():将字符转化为十进制数

@@ -1,0 +1,332 @@
+前端插件之Datatables使用--下篇
+
+https://www.cnblogs.com/37Y37/p/11350164.html
+
+从不同的数据源获取数据，修改数据最终呈现方式，
+操作Dom改变页面功能，开启服务端数据处理等
+
+
+
+数据加载
+
+从数组中获取
+
+<table id="myTable-x" class="display" style="width:100%"></table>
+
+$(document).ready(function() {
+    var dataSet = [
+      ["3","https://ops-coffee.cn","2018-07-03"],
+      ["9","https://demo.ops-coffee.cn", "2019-08-06"],
+    ];
+
+    $('#myTable-x').DataTable({
+        "data": dataSet,
+        "columns": [
+          { title: "Id" },
+          { title: "Site" },
+          { title: "Date" },
+        ]
+    })
+});
+
+
+data:指定数组
+columns:配置每一列的title
+
+注意：从数组中获取数据一定要有表头，如果没有则可能会报错
+
+解决方法就是tatatables添加columns配置，或写上table的tread
+<table id="myTable-x" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Site</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+</table>
+
+
+
+
+从对象中获取
+<table id="myTable-x" class="display" style="width:100%"></table>
+
+$(document).ready(function() {
+    var dataSet = [
+      {"Id":"3","Site":"https://ops-coffee.cn","Date":"2018-07-03"},
+      {"Id":"9","Site":"https://demo.ops-coffee.cn","Date":"2019-08-06"},
+    ];
+
+    $('#myTable-x').DataTable({
+        "data": dataSet,
+        "columns": [
+          {"data": "Id", "title": "Id"},
+          {"data": "Site", "title": "Site"},
+          {"data": "Date", "title": "Date"},
+        ]
+    })
+});
+
+
+使用对象数组，一定要配置columns的data,告诉DataTables每列对应的属性，title配置可选，
+添加title会给表格添加表头
+
+
+从实例中获取
+
+
+$(document).ready(function() {
+    function dataSet(id, site, date) {
+      this.id = id;
+      this.site = site;
+      this.date = date;
+    };
+
+    $('#myTable-x').dataTable({
+      data: [
+        new dataSet("3", "https://ops-coffee.cn", "2018-07-03"),
+        new dataSet("9", "https://demo.ops-coffee.cn", "2019-08-06"),
+      ],
+      columns: [
+          {"data": "id", "title":"Id"},
+          {"data": "site", "title":"Site"},
+          {"data": "date", "title":"Date"}
+      ]
+    });
+});
+
+
+ajax异步获取
+
+
+Datatables还支持Ajax的方式异步加载数据，简单的方式是直接配置一个url地址即可
+
+$(document).ready(function() {
+    $('#myTable-x').dataTable({
+        "ajax": 'sdata.json'
+    });
+});
+
+
+ajax接收的数据可以是数组或对象，注意columns配置，可以对应参考前文两种格式数据的处理
+
+
+结果数据处理
+
+上边的table可以发现有个title列的呢哦荣能够是一个网址，如果我们想让网址能够点击该如何实现呢》
+
+可以利用columns的render属性对展示结果进行更改
+$(document).ready(function() {
+    $('#myTable-x').dataTable({
+        "ajax": 'sdata.json',
+        "columns": [
+            {"data": "id", "title":"Id"},
+            {
+                "data": "site", 
+                "title":"Site",
+                "render": function (data, type, row) {
+                  return '<a href='+data+' target="_blank">'+data+'</a>'
+                }
+            },
+            {"data": "date", "title":"Date"}
+        ]
+    });
+});
+
+
+
+render后面跟个函数，每当数据表需要获取列中某个单元格的数据时render函数都会执行，且函数
+可能会被执行多次，函数默认接收是三个参数:
+
+
+data:单元格的具体数据，例如: https://ops-coffee.cn
+type:标识了这一次调用的请求类型，会有filter,display,type,sort
+row:这一行的完整数据源，如果像Demo示例传了对象数据，那么可以通过row.site获取这一行site列的数据
+拿到参数进行一系列的处理后可以通过return返回最终想要展示的内容
+
+
+当然也可以通过columns表格末尾添加一列以实现编辑，删除的按钮展示
+
+Dom操作
+
+如果我不需要datatables显示左上角的每页显示条数信息，而要换成一个添加按钮怎么做呢?
+可以借助datatables的dom来实现
+
+
+默认情况下表格都会有左上角的每页显示条数，右上角的搜索，左下角的表格信息，右下角的分页，
+中间的数据加载等待以及表格本身，这些都是datatables的DOM，它们实际上就是一个div
+包裹起来的select,input之类的html标签，datatables中的每个DOM都与一个字母相对应，
+
+l:length
+f:filtering
+t:table
+i:information
+p:pagination
+r:processing
+
+
+这些控件在datatables可以通过配置dom来控制他们的显示位置，以及是否显示，默认的显示顺序是lfrtip
+
+$('#myTable-x').dataTable({
+    "dom": 'lfrtip'
+})
+
+你如果不想显示某个空间，可以通过去掉dom配置项里对应的字母实现，同时Datatables支持
+四个自定义的标签，通过这四个标签可以方便的来修改DOM的展示
+
+
+<>尖括号代表html里的div
+<"class">代表了添加了class的div
+<'#id'>代表了添加id的div
+<'#id.class'>代表添加了id和class的div
+
+
+我们想把右上角的每页显示条数控件换成添加按钮的话可以
+
+
+服务器端处理
+
+
+Datatable支持使用服务端进行数据处理，当开启服务端数据处理后，Datatables将在页面执行
+分页，排序，搜索等操作时向服务端发出ajax请求，ajax请求会传递多变量给服务端，服务端
+接收到请求后根据变量的值对数据进行处理，处理完成按照固定的格式返回前端页面，
+页面对返回数据进行渲染提供用户查看
+
+
+开启服务器模式只需要两个设置项serverSide和ajax
+
+
+$('#myTable-x').dataTable({
+    "serverSide": true,
+    "processing": true,
+    "ajax": '/api/site/data'
+})
+
+serverSide:为true时表示开启服务端处理模式
+
+processing:为true时会开启数据处理中的提示，非必须
+
+ajax:指定服务端的地址，可以像上边一样是个字符串，也可以像jquery.ajax一样作为一个对象使用，
+比如想传递额外的参数(datatable默认会给后端传递许多的参数，)给后端服务器的话，可以如下使用
+
+
+$('#myTable-x').dataTable({
+    "serverSide": true,
+    "processing": true,
+    "ajax": {
+        "url": "/api/site/data",
+        "data": function (d) {
+            d.type = 'ops-coffee';
+        }
+    }
+})
+
+data:可以在发送请求给后端额外增加
+
+
+type=ops-coffee的参数
+
+
+发送到服务器端的参数
+
+
+当开启服务端数据处理后，默认会给服务端传递许多参数，
+
+draw,绘制计数器，主要用来确保ajax从服务器端接收到的数据是对应同一次请求的
+start:第一条数据的起始位置
+length:每页显示的条数
+search:[value]:全局的检索关键字
+order[i][column]:告诉服务器哪些列是需要排序的，i
+为拍序列的序号，下边的i相同汉所以，注意i是从0开始的
+
+
+order[i][dir]:告诉服务器排序的方式"desc""asc"
+
+columns[i][data]:columns上定义的data属性值
+columns[i][name]:columns上定义的name属性值
+columns[i][searchable]:告诉服务器哪些列可以被搜索
+columns[i][orderable]:告诉服务器哪些列可以进行排序
+columns[i][search][value]:告诉服务器某些列的具体搜索条件
+
+
+
+如果需要后台分页，那么需要拿到start,length两个参数做相应的处理
+
+如果有搜索的内容，那么需要拿到search[value]参数做处理
+
+
+服务器返回数据的格式
+
+
+服务端需要返回datatables可以处理的数据格式，具体数据格式如下：
+{
+    "draw": 1,
+    "recordsTotal": 7,
+    "recordsFiltered": 7,
+    "data": [
+        {
+            "id": 3,
+            "site": "https://ops-coffee.cn",
+            "date": "2018-07-03"
+        },
+        {
+            "id": 9,
+            "site": "https://demo.ops-coffee.cn",
+            "date": "2019-08-06"
+        }
+        // 省略其他结果
+    ]
+}
+
+
+draw:客户端调用服务端次数标识，客户端传过来是什么原样返回回去即可，无需修改
+recordsTotal:数据总条数，没有过滤的数据总条数
+recordsFiltered:过滤后符合要求的条数，如果没有搜索参数那么这个值与recorTotal一致
+data:需要显示的具体数据，json格式
+
+
+api调用
+
+Datatables提供了强大的api来处理表格上的数据，可以通过api添加数据到已经存在的表格，
+或对已经存在的数据记性凑走，
+
+跳转到页面
+
+
+跳转到第3页：
+
+
+var table = $('#myTable').DataTable()
+table.page(2).draw(false)
+
+
+
+page(2):page分页方法，后面的2表示跳转到第几页，可以是一个数字，也可是是first,next,previous
+,last这样的字符串，当为数字时要从0算起，例如，示例中为2实际上是跳转到第3页
+
+
+draw(false):对表格进行重绘以实现表格更新的显示，大多数的api操作都不会直接更新在页面上，
+所以需要调用下draw，默认情况下重绘后分页被重置回到第一页，当设置为false时分页不会被重置
+
+搜索某列
+
+搜索第2列包含https://ops-coffee.cn的列
+
+
+var tablx=$(#myTable).dataTable()
+
+table.api().column(1).search("https:ops-coffee.cn").draw()
+
+首先需要注意这个例子中的API调用使用了.api(),这是因为上一个例子在初始化时用了.DataTable()
+而这个例子初始化时用了.dataTable(),
+仅仅是d字母大小写的区别而已，
+
+前者直接返回api实例，后者返回的是jquery实例
+
+
+
+
+
+
+

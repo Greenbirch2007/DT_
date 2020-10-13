@@ -1,0 +1,31 @@
+【Linux】 .zsh_history文件损坏的问题解决以及strings命令用法
+
+https://zhuanlan.zhihu.com/p/97008008
+1 什么是.zsh_history？
+
+.zsh_history是平时使用zsh终端的命令历史纪录文件
+
+
+
+2 问题现象：进入终端后zsh提示如下信息
+
+zsh: corrupt history file /home/boots/.zsh_history
+
+也就是说.zsh_history文件已经损坏(含有无效的字符 \00\00\00\00)
+
+3 解决方法：使用strings命令 删除.zsh_history文件中的无效字符即可
+
+cd ~  #进入home目录
+mv .zsh_history .zsh_history_bad #移动.zsh_history文件至.zsh_history_bad （这里是指重命名）
+strings .zsh_history_bad > .zsh_history #strings 命令，输出.zsh_history_bad文件中的字符至.zsh_history中
+再次打开zsh终端，即保存了历史命令，也解决了上述问题。
+
+
+
+4 strings 命令解析
+
+strings命令在对象文件或二进制文件中查找可打印的字符串。字符串是4个或更多可打印字符的任意序列，以换行符或空字符结束。 strings命令对识别随机对象文件很有用。
+
+若文件中有无效的字符，则可以通过strings命令进行筛选！！！
+
+strings 123 > 456; # 意思为将123文件中的字符输出至456文件中。

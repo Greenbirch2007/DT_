@@ -1,0 +1,136 @@
+Jquery DataTable基本使用
+
+https://www.cnblogs.com/xiashengwang/p/8087181.html
+
+1.首先需要引用两个文件
+
+
+2.DataTable支持的数据类型
+
+2.1 数组
+
+vardata = [[],[]]
+2.2 对象
+2.3 自定义实例
+
+
+2.4 datatable的数据路哎呀un
+
+1.dom
+2.html5
+3.javascript
+通过data配置，指定数据源。可以通过DataTables API row.add().remove()操作行数据
+
+4.ajax
+
+通过服务器端分页的方式，取得数据。
+返回的数据只能是json数组或对象
+
+
+3.有两种分页发哪个是
+
+3.1 客户端分页
+
+这种方式，代码较简单，整个数据量在10000条以内可以考虑。
+
+使用默认设置，就可以使table具有排序，查找，分页的基本功能
+
+
+3.2 服务器分而已
+
+这种方式针对大数据量的table(10万条以上)，每次只读取当前的一页数据，分页在后台做。
+
+代码相对复杂，不过页面响应更快
+
+
+服务端端的分页一般要求我们先定义head表头，tbody可以不写
+
+
+4.配置采纳数
+
+这些配置参数可以通过javascript进行设置，也可以直接用html
+标签data-*的方式写在table的标签中
+
+
+是否允许检索
+是否允许排序
+初期拍序列
+是哦福显示情报
+是否允许翻页
+水平滚动条
+垂直滚动条
+件数选择功能
+件数选择下拉框内容
+每页的初期件数，用户可以操作lengthMenu上的值覆盖
+翻页按钮样式
+numbers:数字
+simple:前一页，后一页
+simple_numbers:
+自动列宽
+
+
+5.服务器端的参数
+
+draw
+start
+length
+search[value]
+order[i][column]:int
+order[i][dir]
+
+
+6. DataTable常用事件
+
+
+7.Datatable常用api
+
+
+
+1,获取api的防护四
+2.得到一个api对象
+3.描画
+
+'page':不重取数据，只描画当前页
+data():获取全表数据
+
+column().data() ：获取列数据
+
+row().data() 获取行数据
+row().node() 获取行dom对象
+row().remove() 删除当前行
+row().add() 加一行数据
+rows().add() 加多行数据
+
+
+
+table().body() 获取tbody dom对象
+table().header()  获取theader dom对象
+table().footer()  获取tfooter dom对象
+table().node()  获取table dom对象
+
+
+destory() 销毁table true:连同html一起销毁
+
+on 绑定table的事件
+
+page.len(10) 设置一页显示的条数
+
+
+
+8.1 重新加载数据
+
+第二个参数为false的话，会保持当前的选中页
+
+vartable = $("#example").DataTable();
+
+table.ajax.reload(function(json)){
+	$('#myInput').val(json.lastInput);
+
+
+8.2 改变url,再加载
+
+table.ajax.url('newData.json').load();
+
+
+8.3 获取服务器返回的json数据
+

@@ -1,0 +1,35 @@
+
+
+
+操作逻辑是
+
+python ----->cx_Oracle---->OracleClient------>Oracle Database
+                                   （多一个中间件）
+
+按照顺序安装以下程序()
+1.python 3.6 (64位)
+
+2.cx_Oracle 7.0.0(64位)
+
+
+3. OracleClient （64） 专门的Oracle数据库的客户端(较大700多MB)
+
+
+4. instantclient_11_2 (64位)
+
+
+1. 重新下载 instantclient 64位， 下载链接：http://jvniu.jb51.net:81/201708/tools/instantclientx64_jb51.rar
+
+下载完成后，解压得到 文件夹 instantclient_11_2
+
+2   将整个文件夹移动到oracle客户端安装目录，client子文件夹内
+
+3.  添加环境变量（下图为win10系统）
+
+
+
+
+5. 远程的数据库
+
+
+6. 测试脚本（以管理员的身份进入）

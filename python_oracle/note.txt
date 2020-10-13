@@ -1,0 +1,123 @@
+
+
+连接oracle数据
+
+使用python连接oracle时，和mysql不同的是必须要启动监听，
+首先使用win+R　打开CMD,输入service.msc回车打开服务，
+找到oracle监听程序，点击启动此服务即可
+
+
+通过cmd查看监听状态也是已经启动，使用sqlplus连接到数据库，也可以使用工具PLSQL远程连接，
+需要注意监听状态是是否正常以及监听端口是否为默认的1521
+
+
+
+
+借助cx_Oracle第三方模块，
+
+
+创建数据库连接connect和关闭数据库连接close
+
+
+创建数据库连接的三种方式：
+
+方法一：　用户名，密码和监听分开写
+
+import cx_Oracle
+
+db =cx_Oracle.connect('username/password@host:port/orcl')
+db.close()
+
+
+
+方法二：　用户名，密码和监听写在一起
+
+import cx_Oracle
+
+db =cx_Oracle.connect('username/password@host:1521/orcl')
+db.close()
+
+
+方法三：配置监听并连接
+
+import cx_Oracle
+
+tns = cx_Oracle.makedsn("host",1521,'orcl')
+db = cx_Oracle.connect("username",'password',tns)
+db.close()
+
+查询数据
+
+这里使用第一种方法配置即可，不再使用sqlalchemy方法，
+若端口为默认的1521则可以省略不写
+
+连接数据库
+
+db = cx_Oracle.connect("scott/scott@localhost:1521/orcl")
+
+打开游标
+
+cur = db.cursor()
+
+执行sql
+
+
+sql = "select sysdate from dual"
+cur.execute(sql)
+data= cur.fetchone()
+print("Database time:%s" %data)
+
+提交，关闭游标
+
+cur.close()
+db.close()
+
+创建数据库表并插入数据
+
+db = cx_Oracle.connect("scott/scott@localhost:1521/orcl")
+cur = db.cursor()
+cur.execute("CREATE TABLE my_job(id INT, name VARCHAR(40),age INT,job VARCHAR(50))")
+
+cur.execute("INSERT INTO my_job(id,name,age) VALUES (12,'xiaoliu',32)")
+cur.execute("INSERT INTO my_job(id,name,age) VALUES (13,'xiaoli',32)")
+cur.execute("INSERT INTO my_job(id,name,age) VALUES (14,'xiaosha',32)")
+cur.execute("INSERT INTO my_job(id,name,age) VALUES (15,'xiaoliu',32)")
+cur.execute("INSERT INTO my_job(id,name,age) VALUES (16,'xiaoliu',32)")
+
+db.commit() # 一定要commit才行，要不然数据是不会插入的
+
+cur.execute("select * from my_job")
+
+#提取一条数据，返回一个元组
+
+data = cur.fetchone()
+print(data)
+cur.close()
+db.close()
+
+删除数据并查询
+
+删除数据很简单，连接数据库打开游标，执行sql提交，关闭游标，关闭数据库，
+
+删除数据
+
+python使用标准的api接口操作数据库是很简单
+主要有６大步：
+１．连接数据库
+２．打开游标
+３．执行ｓｑｌ
+4.提交
+５．关闭游标
+６．关闭数据库
+
+
+mysql使用pymysql
+oracle使用cx_Oracle
+
+
+
+
+
+
+
+

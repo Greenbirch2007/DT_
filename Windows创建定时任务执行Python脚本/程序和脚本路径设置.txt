@@ -1,0 +1,14 @@
+
+
+1. 程序或脚本
+
+D:\python3.6\python.exe
+
+2. 添加参数(可选)A
+
+D:\pyhon3.6\Script\脚本.py
+
+
+3. 起始于(可选)(T)
+
+D:\python3.6

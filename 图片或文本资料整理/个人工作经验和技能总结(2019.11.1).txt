@@ -1,0 +1,18 @@
+
+
+
+2019.11.1
+
+1. PLSQL 使用
+
+2. 前端 DataTables + 表格jquery-table2excel  插件使用
+实现，搜索，分页，排序，国际化，导出数据表插件，功能
+
+
+3. python 匹配数据的脚本
+
+
+4. python cx_Oracle ，操作Oracle实际操作的使用
+
+
+

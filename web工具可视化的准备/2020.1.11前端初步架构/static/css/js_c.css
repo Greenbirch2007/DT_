@@ -1,0 +1,11 @@
+/*qiulinhe:2016年11月7日13:48:26*/
+/* dataTables列内容居中 */
+.dataTable{
+    text-align: center;
+}
+
+
+td{
+    word-break: break-all;
+    font-size: 14px;
+}

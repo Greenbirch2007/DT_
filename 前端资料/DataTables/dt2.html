@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 加载 Jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- 加载 Datatables -->
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+</head>
+<body>
+<table id="myTable" class="display" style="width:100%">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Office</th>
+        <th>Age</th>
+        <th>Start date</th>
+        <th>Salary</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Ops Coffee</td>
+        <td>System Architect</td>
+        <td>Edinburgh</td>
+        <td>18</td>
+        <td>2011/04/25</td>
+        <td>$320,800</td>
+    </tr>
+    <!-- 中间省略一些tr数据 -->
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+    <tr>
+        <td>Donna Snider</td>
+        <td>Customer Support</td>
+        <td>New York</td>
+        <td>27</td>
+        <td>2011/01/25</td>
+        <td>$112,000</td>
+    </tr>
+
+
+
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Office</th>
+        <th>Age</th>
+        <th>Start date</th>
+        <th>Salary</th>
+    </tr>
+    </tfoot>
+</table>
+
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    });
+    $('#myTable').DataTable({
+        "paging": false,
+        "ordering": false,
+        "info": false,
+        "searching": false,
+    });
+    "language": {
+        "decimal": "",
+            "emptyTable": "表中数据为空",
+            "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+            "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+            "infoFiltered": "(由 _MAX_ 项结果过滤)",
+            "InfoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "显示 _MENU_ 项结果",
+            "loadingRecords": "载入中...",
+            "processing": "处理中...",
+            "search": "搜索:",
+            "zeroRecords": "没有匹配结果",
+            "Paginate": {
+            "sFirst": "首页",
+                "sPrevious": "上一页",
+                "sNext": "下一页",
+                "sLast": "尾页"
+        },
+        "Aria": {
+            "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+        }
+    }
+</script>
+</body>
+</html>

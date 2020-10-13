@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--第一步：引入Javascript / CSS （CDN）-->
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+    　　
+
+    <!--第三步：初始化Datatables-->
+    $(document).ready( function () {
+    $('#example').DataTable();
+    } );
+</head>
+<body>
+<script>
+    var iDisplayStart = 0;
+    var iDisplayLength = 6;
+
+    $('#tableList').dataTable({
+        "bJQueryUI": true,//是否使用jquery中的ui theme
+        "bProcessing": true, //DataTables载入数据时，是否显示‘进度’提示
+        "bServerSide": true, //是否启动服务器端数据导入,也就是调用后台数据的时候
+        "bStateSave": false, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
+        "sPaginationType": "full_numbers",//详细分页组，可以支持直接跳转到某页
+        "bScrollInfinite": false, //是否启动初始化滚动条
+        "bScrollCollapse": false, //是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变
+        "bPaginate": true, //翻页功能
+        // "aLengthMenu": [5, 10, 15], //更改显示记录数选项
+        // "iDisplayLength": 9, //默认显示的记录数
+        // "sScrollY": 100,//规定表格高度，出现滚动条
+        // "sScrollX": "50%",////是否开启水平滚动，以及指定滚动区域大小,可设值：'disabled','2000%'
+        // "bLengthChange": true, //改变每页显示数据数量
+        "bFilter": false, //过滤功能
+        "bSort": false, //排序功能，初始化的时候定义整个表格是否进行排序
+        "bInfo": false,//页脚信息，即表格左下角显示多少条数据的提示
+        "bAutoWidth": true,//自动宽度，false为禁止自动计算列宽
+        // 'aaSorting': [[2, 'asc']],//bSort失效
+        "iDisplayStart": iDisplayStart,
+        "iDisplayLength": iDisplayLength,//默认显示的记录数
+        // "aaData": [
+        //     {
+        //     }
+        // ],
+        "columns": [//sClass设置列的class属性值，bSearchable设置列的数据是否过滤，bVisible设置列是否显示，sTitle设置列的标题
+            // {bVisible表示不再表格中显示
+            //     "data": "caseId", 'sTitle': '序号', 'sWidth': '8%', 'sClass': 'center', "bVisible": false, "bSortable": false, "bUseRendered": false
+            // },
+            {
+                "data": "caseId", 'sTitle': '序号', 'sWidth': '2%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "caseName", 'sTitle': '案件名称', 'sWidth': '20%', 'sClass': 'text-center', "sDefaultContent": "", "bSortable": false, "bUseRendered": false //此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错
+            },
+            {
+                "data": "caseCode", 'sTitle': '序号', 'sWidth': '14%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "caseCauseName", 'sTitle': '原因', 'sWidth': '8%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "underTakerName", 'sTitle': '收押人', 'sWidth': '8%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "managerName", 'sTitle': '管理人员', 'sWidth': '8%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "registerDate", 'sTitle': '日期', 'sWidth': '8%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {//自定义列
+                "mDataProp": "userType",
+                'sTitle': '登录用户角色',
+                'sWidth': '10%',
+                'sClass': 'text-center',
+                // "fnRender": function (oObj) {
+                //     if (oObj.aData.userType == '1' || oObj.aData.userType == '3') {
+                //         return '用户'
+                //     } else {
+                //         return '管理员'
+                //     }
+                // },
+                "bSortable": false,
+                "bUseRendered": false
+            },
+            {
+                "sDefaultContent": "",
+                'sTitle': '操作',
+                'sWidth': '7%',
+                'sClass': 'text-center',
+                "render": function (data, type, full) { // 返回自定义内容
+                    return "<span  id='factorConfirm' style='display:inline-block;color:#01d1b8;text-decoration:underline;padding-bottom:3px;cursor:pointer'>跳转按钮</span>";
+                }
+            }
+        ],
+        "fnRowCallback": function (nRow, aData, iDisplayIndex) {//格式化数据
+            //iDisplayIndex指当前行的序号   每行加载完成，将当前列进行替换
+            if (aData.userType == '1' || aData.userType == '3') {
+                $('td:eq(7)', nRow).html('用户');
+            } else {
+                $('td:eq(7)', nRow).html('管理员');
+            }
+            return nRow;
+        },
+        "oLanguage": {//国际化配置
+            "sProcessing": "正在加载中......",
+            "sLengthMenu": "每页显示 _MENU_ 条记录",
+            "sZeroRecords": "对不起，查询不到相关数据！",
+            "sEmptyTable": "表中无数据存在！",
+            "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+            "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+            "sSearch": "搜索",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上一页",
+                "sNext": "下一页",
+                "sLast": "末页"
+            }
+        },
+        "sAjaxSource": requestUrl,//接口路径
+        "fnServerData": function (sUrl, aoData, fnCallback) {
+            $.ajax({
+                "url": sUrl,
+                "type": 'GET',
+                "dataType": 'json',
+                "dataSrc": '',
+                "contentType": "application/x-www-form-urlencoded; charset=utf-8",
+                "cache": false,
+                "data": aoData,
+                "sDom": "frtlip",
+                "sPaginationType": "full_numbers",
+                "success": (res) => {
+
+                //处理返回的数据
+                fnCallback(handleData(res)); //处理返回的数据
+
+            // 点击跳转按钮
+            $("#factorConfirm").on('click', function (e) {
+                //获取本行数据(对象）
+                var currentData = $('#tableList').DataTable().row($(this).parents('tr')).data();
+                window.location.href = window.location.origin + '/html/ceshi.html?name=' + name + "&age=" + age
+            });
+        },
+            "error": function (xhr, error, thrown) {
+                top.showInfoWinError("发生异常:" + error);
+            }
+        })
+        }
+    });
+    function handleData(json) { // 处理返回的数据
+        var obj = { code: 1 };
+        obj.iTotalDisplayRecords = obj.iTotalRecords = json.body.data.length;
+        obj.aaData = json.body.data;
+        return obj;
+    }
+</script>
+</body>
+</html>

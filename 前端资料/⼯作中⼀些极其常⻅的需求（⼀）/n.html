@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>datatable 例子</title>
+    <!--第一步：引入Javascript / CSS （CDN）-->
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="引入bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="引入dataTable.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./n.css">
+
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="引入jquery.js"></script>
+    <style>
+        .box{width: 1000px;margin:100px auto}
+        #table_id_example thead{background: #3174c7;color: white;}
+        #table_id_example thead tr th,tbody{text-align: center;}
+    </style>
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="引入jquery.dataTable.js"></script>
+    <script type="text/javascript" charset="utf8" src="引入dataTable.bootstrap.js"></script>
+
+
+</head>
+<body>
+
+<div class="box">
+    <table id="table_id_example" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>城市</th>
+        </tr>
+        </thead>
+
+    </table>
+</div>
+
+<!--第三步：初始化Datatables-->
+<script>
+$(document).ready(function () {
+    var data =[
+        {"name":"AA","age":"19","city":"北京"},
+        {"name":"BB","age":"20","city":"上海"},
+        {"name":"CC","age":"23","city":"广州"},
+        {"name":"DD","age":"23","city":"深圳"},
+        {"name":"EE","age":"32","city":"武汉"},
+        {"name":"FF","age":"19","city":"长沙"},
+        {"name":"GG","age":"19","city":"郑州"},
+        {"name":"HH","age":"19","city":"南昌"},
+        {"name":"JJ","age":"19","city":"银川"},
+        {"name":"KK","age":"19","city":"北京"},
+        {"name":"LL","age":"19","city":"北京"},
+        {"name":"MM","age":"19","city":"北京"},
+    ] ;
+    $('#table_id_example').DataTable({
+        'bSort':false, //排序功能
+        'data':data,
+        "columns":[
+            {"data":'name'},
+            {"data":'age'},
+            {"data":'city'},
+        ]
+    });
+});
+
+
+</script>
+columns = ["姓名2","年龄2","城市2"]
+    var table_str = $("# table_id_example thead tr");
+    $.each(columns,function(i,n){
+table_tr.append("<th>" + n + '</th>')
+    });
+
+$('#table_id_example').DataTable({
+    searching:false,
+    bLengthChange:false,
+    "sInfo":true, //页脚信息
+    "language":{
+        "info":"", //表格左下角显示的文字
+        "paginate":{
+            "previous":"上一页",
+            "next":"下一页"}
+    },
+    destroy:true, //去掉重新加载数据的弹窗问题
+    "data":train_data,
+    "column":[
+            {data:"name"},
+            {
+                data:"url",
+                render:function(data,type,row,meta){}
+)
+</body>
+</html>

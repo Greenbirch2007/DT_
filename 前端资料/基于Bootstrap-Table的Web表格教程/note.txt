@@ -1,0 +1,105 @@
+基于Bootstrap-Table的Web表格教程
+
+1.Bootstrap-Table的概念
+
+
+基于Bootstrap的jquery表格插件，通过简单的设置，拥有
+单选，多选，排序，分页，编译，导出，过滤(扩展)等功能
+
+
+Bootstrap-Table是一个基于jQuery插件，能提供各种强大的前后端表格处理功能
+
+
+2.Bootstrap-Table的优点
+
+
+a.因为基于Bootstrap所以相应其样式都是标准化的
+b.提供强大的操作选项与方法api，只需要关注业务数据字段的组装不太需要关注各种样式
+c.详细的文档与例子，特别是例子文档中常见的表格应用方式基本都有了，直接使用
+d.提供了很多第三方扩展插件可以满足复杂的应用场景
+
+3.Bootstrap-Tab获取与使用
+
+在html页面直接引用引用即可
+
+注意bootstrap-table是基于bootstarp与jquery的是，所以需要进入
+引入这两个js库
+
+
+a.首先引入jQuery与Bootstrap
+
+    <!--先引入jQuery 和　Bootstrap-->
+    <script src="../js/jquery.min.js"></script>
+    <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+
+
+b.再引入boostrap-table
+
+    <!--boostrap-table start -->
+    <link href="../bootstrap-table-1.15.5/dist/bootstrap-table.css">
+    <script src="../bootstrap-table-1.15.5/dist/bootstrap-table.js"></script>
+
+    <script src="../bootstrap-table-1.15.5/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!--boostrap-table end -->
+
+注意：引入boostrap-table-zh-CN.min.js是为了支持中文本地化，
+bootstrap-table是支持多语言的，可根据需要进行引入
+
+
+３.组装Table的表头字段
+bootstrap-table支持两种方式来定义表格，
+一种，使用html的data属性方式
+另一种，是使用javascript脚本方式。下面使用js的方式，data属性方式没有javascirpt灵活
+
+
+data属性方式
+
+
+javascript方式操作过程
+
+
+a.首先在html页面中定义table标记并增加相应的属性，每一个属性都是以data-x-x='x'标记的，
+每一个属性的定义，参考表格参数
+
+html页面中增加table标记
+
+
+b.编写javascript来定义表头
+
+
+用javascript方式，每一个字段属性
+
+
+$('#caseListTable').bootstrapTable({});通过在()中
+放入json对象可动态生成表格。。
+columns:[{}]用于定义表头的字段名，一个json对象对应
+一个字段的格式的定义
+
+
+c.组装数据到表格中
+
+通过jQuery的ajax获取服务端数据，然后加载到表格中取即可
+
+$("#caseListTable").bootstrapTable("load",caseData);
+
+
+'load'即方法名，caseData是一个json数组，如果返回
+json数据中的key与表格中field无法一一对应，还需要
+另写函数来进行处理一下json数据
+即图中的packagingDataForCaseListTable函数
+
+
+注意，如果返回数据格式是json格式的数组，每一个数组项目
+表示一行数据:json数据其中的key要与步骤b中定义的[field]
+
+名称相对应，如field:case_name,其对应json数据格式是
+{"case_name":"myCase"}
+
+
+Bootstrap-Table的扩展，字段的过滤与表格编辑与导出
+
+
+
+

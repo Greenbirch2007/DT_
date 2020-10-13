@@ -1,0 +1,685 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智表（ZCELL）专业版演示</title>
+    <meta name="keywords" content="前端,excel,插件，ZCELL,智表,免费,jquery,浏览器,仿EXCEL,官网">
+    <meta name="description" content="智表（ZCELL）是一款浏览器仿excel表格jquery前端插件。智表可以为你提供excel般的智能体验，支持双击编辑、设置公式、设置显示小数精度、下拉框、自定义单元格、复制粘贴、不连续选定、合并单元格、拆分单元格、插入行列、删除行列、隐藏行列、键盘操作等。">
+    <meta name="author" content="智表研发团队">
+    <meta name="copyright" content="智表研发团队版权所有">
+        
+
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/ZCell.register.js"></script>
+    <script type="text/javascript" src="./js/ZCell.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/js/ZCell.min.css" />
+
+
+    <style>
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 6px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 2px;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button1 {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+        }
+
+            .button1:hover {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+        .button2 {
+            background-color: white;
+            color: black;
+            border: 1px solid #008CBA;
+        }
+
+            .button2:hover {
+                background-color: #008CBA;
+                color: white;
+            }
+
+        .button3 {
+            background-color: white;
+            color: black;
+            border: 2px solid #f44336;
+        }
+
+            .button3:hover {
+                background-color: #f44336;
+                color: white;
+            }
+
+        .button4 {
+            background-color: white;
+            color: black;
+            border: 2px solid #e7e7e7;
+        }
+
+            .button4:hover {
+                background-color: #e7e7e7;
+            }
+
+        .button5 {
+            background-color: white;
+            color: black;
+            border: 2px solid #555555;
+        }
+
+            .button5:hover {
+                background-color: #555555;
+                color: white;
+            }
+    </style>
+
+    <script>
+
+
+
+        //页面加载时，执行
+        var zcell1;
+
+        //准备数据源
+        var jsondata = [//四行五列
+            ["", "", "", "", "", ""],
+            ["", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["■合并单元格", "单位", "综合取值", "费用", "E1", "F1"],
+            ["", "", "", "机械费", "材料费", "人工费"],
+            ["■计算公式", "合计", "", "30", "40", "50", "公式支持加减乘除和自定义函数"],
+            ["", "分公司1", "", "300", "5.2375", "28.2345", ""],
+            ["", "分公司2", "", "600", "13.232", "58.14298"]
+
+        ];
+
+
+        //页面加载时执行
+        $(document).ready(function () {
+
+            //创建JSCELL，指明承载容器
+            zcell1 = new ZCell(document.getElementById("cellContainer"));
+
+            //创建表，并指定列，行数
+            zcell1.InserSheet(0, 10, 24);
+
+
+
+            //加载数据
+            zcell1.GetSheet(0).LoadArrData(jsondata);
+
+
+            //合并单元格
+            zcell1.GetSheet(0).MergeCells(1, 1, 10, 1);
+            zcell1.GetSheet(0).SetCellValue(1, 1, "本版是智表(ZCELL)专业版，是更加专业的前端仿Excel插件，欢迎体验。如果您需要智表专业版，请联系QQ108653210");
+            zcell1.GetSheet(0).SetCellStyle(1, 1, {
+                "color": "red"
+            });
+
+
+            zcell1.GetSheet(0).MergeCells(1, 2, 5, 2);
+            var linktpye2 = {
+                "code": "object",
+                "object": "<a href='http://www.zcell.net/zcell-Free/demo-free.html' style='color: red' target='_blank'  title='智表的强大，离不开您的支持！！！'>去看看→智表普及版演示</a>"
+            };
+            zcell1.GetSheet(0).SetCellType(1, 2, linktpye2);
+
+
+            zcell1.GetSheet(0).MergeCells(6, 2, 8, 2);
+            var linktpye3 = {
+                "code": "object",
+                "object": "<a href='http://www.zcell.net' style='color: red' target='_blank'   title='智表的强大，离不开您的支持！！！' >智表（ZCELL）官网</a>"
+            };
+            zcell1.GetSheet(0).SetCellType(6, 2, linktpye3);
+
+            zcell1.GetSheet(0).MergeCells(9, 2, 10, 2);
+            var linktpye3 = {
+                "code": "object",
+                "object": "<a href='http://www.cnblogs.com/devilzh' style='color: red' target='_blank'  title='智表的强大，离不开您的支持！！！' >智表博客</a>"
+            };
+            zcell1.GetSheet(0).SetCellType(9, 2, linktpye3);
+
+
+            ////合并单元格
+            // zcell1.GetSheet(0).MergeCells(1,1,10,2);
+
+
+            //var linktpye2 = {
+            //    "code": "object",
+            //    "object":"<div><p>智表(ZCELL)是浏览器端纯Js仿Excel表格插件，欢迎体验，如果ZCELL能够解决您的问题，请联系QQ108653210，赞助或购买授权。</p><p>智表的强大，离不开您的支持!!!&nbsp;&nbsp;<a href='http://www.cnblogs.com/devilzh' target='_blank'>了解ZCELL 更多信息</a></p></div>"
+            //};
+            //zcell1.GetSheet(0).SetCellType(1, 1, linktpye2);
+            // zcell1.GetSheet(0).SetCellStyle(1,1,{
+            //    "color":"red"
+            //});
+
+
+            //设置单元格文本
+            zcell1.GetSheet(0).SetCellValue(1, 3, "下面请体验：");
+            zcell1.GetSheet(0).SetCellStyle(1, 3, {
+                //                "color":"red",
+                "background-color": "yellow",
+                "fontWeight": "bold"
+
+
+            });
+
+
+
+            //合并单元格
+            zcell1.GetSheet(0).MergeCells(1, 4, 1, 5);
+            zcell1.GetSheet(0).MergeCells(7, 6, 8, 6);
+
+
+            //合并
+            merge();
+
+            //取消合并
+            zcell1.GetSheet(0).SetCellType(7, 5, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='unmerge()' style='border: solid 1px;'>拆分单元格</button>"
+            });
+            //合并
+            zcell1.GetSheet(0).SetCellType(8, 5, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='merge()' style='border: solid 1px;'>合并单元格</button>"
+            });
+
+
+            //设置公式
+            zcell1.GetSheet(0).SetFormula(4, 6, "D7+D8");
+            zcell1.GetSheet(0).SetFormula(5, 6, "E7+E8");
+            zcell1.GetSheet(0).SetFormula(6, 6, "F7+F8");
+            zcell1.GetSheet(0).SetFormula(3, 6, "((D6+E6)-F6*2)/4+GETARGS()");  // GETARGS() 为自定义函数,必须大写
+
+            //设置数值小数显示精度
+            var format1 = {
+                "code": "number",
+                "expression": {
+                    "precision": "2",
+                    "thousand": true
+                }
+            };
+            zcell1.GetSheet(0).SetCellFormat(6, 6, format1);
+            zcell1.GetSheet(0).SetCellFormat(6, 7, format1);
+
+
+            //设置单元格样式
+            var style1 = {
+                "color": "red",
+                "background-color": "yellow",
+                "font-family": "Arial",
+                "font-size": "10px",
+                "text-align": "left",
+                "border": "1px solid #000"
+
+            };
+            zcell1.GetSheet(0).SetCellStyle(2, 6, style1);
+            zcell1.GetSheet(0).SetCellStyle(7, 6, style1);
+
+
+            //取消公式的自动计算，待公式设置好后自动计算，利于提高效率
+            zcell1.GetSheet(0).SetCellType(7, 8, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='unautocalcu()' style='border: solid 1px;'>取消自动计算</button>"
+            });
+
+            //重新手动计算所有公式
+            zcell1.GetSheet(0).SetCellType(8, 8, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='manualcalcu()' style='border: solid 1px;'>重新计算</button>"
+            });
+
+
+
+            //设置单元格文本
+            zcell1.GetSheet(0).SetCellValue(1, 10, "■数据格式");
+
+            zcell1.GetSheet(0).SetCellValue(2, 10, "小数显示精度：");
+            zcell1.GetSheet(0).SetCellValue(3, 10, "12.2353298");
+            zcell1.GetSheet(0).SetCellFormat(3, 10, format1);
+
+            zcell1.GetSheet(0).SetCellValue(4, 10, "布尔格式：");
+            zcell1.GetSheet(0).SetCellValue(5, 10, "1");
+            var format2 = {
+                "code": "bool",
+                "expression": {
+                    "format": "正确/错误"
+                }
+            };
+            zcell1.GetSheet(0).SetCellFormat(5, 10, format2);
+            zcell1.GetSheet(0).SetCellValue(6, 10, "0");
+            zcell1.GetSheet(0).SetCellFormat(6, 10, format2);
+
+
+            //设置单元格文本
+            zcell1.GetSheet(0).SetCellValue(1, 12, "■单元格类型");
+
+            zcell1.GetSheet(0).SetCellValue(2, 12, "复选框：");
+            zcell1.GetSheet(0).SetCellType(3, 12, { "code": "checkbox" });
+            zcell1.GetSheet(0).SetCellValue(3, 12, "1"); //设置默认值选中
+
+            zcell1.GetSheet(0).SetCellValue(4, 12, "自定义类型：");
+            var linktpye1 = {
+                "code": "object",
+                "object": "<a href='http://www.cnblogs.com/devilzh' target='_blank'>ZCELL</a>&nbsp;&nbsp;<a href='javascript:void(0)'   onclick='editdata();' >编辑</a>"
+            };
+            zcell1.GetSheet(0).SetCellType(5, 12, linktpye1);
+
+
+            zcell1.GetSheet(0).SetCellValue(6, 12, "按钮类型：");
+            var btntype = {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='summitfun()' style='border: solid 1px;'>点我点我!!</button>"
+            };
+
+
+            zcell1.GetSheet(0).SetCellType(7, 12, btntype);
+
+
+            //key/value
+            zcell1.GetSheet(0).SetCellValue(2, 13, "下拉框类型1：");
+            var drop1 = {
+                "code": "dropdown",
+                "source": { '001': 'Yellow', '002': 'orange', '003': 'gray', '004': 'aYellow', '005': 'aorange', '006': 'agray' }
+            };
+            zcell1.GetSheet(0).SetCellType(3, 13, drop1);
+            zcell1.GetSheet(0).SetCellValue(3, 13, "002");  //设置默认选中第二项
+
+            //简单型
+            zcell1.GetSheet(0).SetCellValue(4, 13, "下拉框类型2：");
+            var drop2 = {
+                "code": "dropdown",
+                "source": ['yellow', 'orange', 'green', 'blue', 'gray', 'black', 'white']
+
+            };
+            zcell1.GetSheet(0).SetCellType(5, 13, drop2);
+
+
+
+
+            //按键
+            zcell1.GetSheet(0).SetCellValue(1, 15, "■支持键盘操作");
+
+            zcell1.GetSheet(0).SetCellValue(2, 15, "请按Ctl+C");
+            zcell1.GetSheet(0).SetCellValue(3, 15, "请按Ctl+V");
+            zcell1.GetSheet(0).SetCellValue(4, 15, "请按回车键");
+            zcell1.GetSheet(0).SetCellValue(5, 15, "请按上下左右键");
+            zcell1.GetSheet(0).SetCellValue(6, 15, "请输入文本数字");
+            zcell1.GetSheet(0).SetCellValue(7, 15, "请按删除键");
+
+            zcell1.GetSheet(0).SetCellValue(8, 15, "请按=键和ESC键");
+
+            //鼠标操作
+            zcell1.GetSheet(0).SetCellValue(1, 17, "■支持鼠标操作");
+            zcell1.GetSheet(0).SetCellValue(2, 17, "双击编辑");
+            zcell1.GetSheet(0).SetCellValue(3, 17, "拖动鼠标多选");
+            zcell1.GetSheet(0).SetCellValue(4, 17, "按Ctl+左键多选");
+            zcell1.GetSheet(0).SetCellValue(5, 17, "拖动调整列宽");
+
+
+            zcell1.GetSheet(0).SetCellValue(1, 22, "■其他开放API");
+
+            zcell1.GetSheet(0).SetCellType(2, 22, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='comput()' style='border: solid 1px;'>实时计算</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(3, 22, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='setcolw()' style='border: solid 1px;'>设置列宽</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(4, 22, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='setrowh()' style='border: solid 1px;'>设置行高</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(5, 22, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='setLabHidden()' style='border: solid 1px;'>隐藏标尺</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(6, 22, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='setLabdisplay()' style='border: solid 1px;'>显示标尺</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(7, 22, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='endedit()' style='border: solid 1px;'>退出编辑</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(8, 22, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='getrccount()' style='border: solid 1px;'>获取行列数</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(8, 23, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='getselcells()' style='border: solid 1px;'>获取选定格</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(2, 23, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='getcor()' style='border: solid 1px;'>获取当前坐标</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(3, 23, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='Getdata()' style='border: solid 1px;'>获取表数据</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(4, 23, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='gettdval()' style='border: solid 1px;'>获取单元格值</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellValue(5, 23, "我是只读的");
+            zcell1.GetSheet(0).SetCellReadOnly(5, 23, 1);// 设置只读属性，1 只读，0 非只读
+
+
+            zcell1.GetSheet(0).SetCellType(6, 23, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='hidestabar()' style='border: solid 1px;'>隐藏状态栏</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(7, 23, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='delsheet()' style='border: solid 1px;'>销毁表</button>"
+            });
+
+
+
+            zcell1.GetSheet(0).SetCellValue(1, 19, "■行列操作");
+
+            zcell1.GetSheet(0).SetCellType(2, 19, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='insercol()' style='border: solid 1px;'>插入2列</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(3, 19, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='delcol()' style='border: solid 1px;'>删除2列</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(4, 19, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='insertrow()' style='border: solid 1px;'>插入2行</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(5, 19, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='delrow()' style='border: solid 1px;'>删除2行</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(6, 19, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='appendcol()' style='border: solid 1px;'>追加2列</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(7, 19, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='appendrow()' style='border: solid 1px;'>追加2行</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(2, 20, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='hidecol()' style='border: solid 1px;'>隐藏列</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(3, 20, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='unhidecol()' style='border: solid 1px;'>取消隐藏列</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(4, 20, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='hiderow()' style='border: solid 1px;'>隐藏行</button>"
+            });
+
+            zcell1.GetSheet(0).SetCellType(5, 20, {
+                "code": "object",
+                "object": "<button type=\"button\" onclick='unhiderow()' style='border: solid 1px;'>取消隐藏行</button>"
+            });
+
+
+            //            window.open("https://www.cnblogs.com/devilzh/p/8494223.html", name);
+
+        });
+
+        //自定义函数，公式中可以直接引用
+        function GETARGS() {
+            var vi = 0.23;
+
+            return vi;
+        }
+
+        //获得数据
+        function Getdata() {
+            //获取当前数据的数组，可以黏贴后查看效果
+            var datastr = zcell1.GetSheet(0).GetDataArr();
+            alert("第6行5列单元格数据为：" + datastr[5][4]);
+
+        }
+
+
+        //获得单元格值
+        function gettdval() {
+            var val = zcell1.GetSheet(0).GetCellValue(6, 7);
+
+            alert("第6列7行单元格值为：" + val);
+        }
+
+        //设置标签隐藏
+        function setLabHidden() {
+            //设置列\行标签不显示
+            zcell1.GetSheet(0).ShowColLab(0);
+            zcell1.GetSheet(0).ShowRowLab(0);
+        }
+
+        //设置标签显示
+        function setLabdisplay() {
+            //设置列\行标签不显示
+            zcell1.GetSheet(0).ShowColLab(1);
+            zcell1.GetSheet(0).ShowRowLab(1);
+        }
+
+        //设置列宽
+        function setcolw() {
+            zcell1.GetSheet(0).SetColWidth(3, 200);
+        }
+
+        //设置行高
+        function setrowh() {
+            zcell1.GetSheet(0).SetRowHeight(16, 50);
+        }
+
+        function comput() {
+            alert("选定数值单元格后，可以在智表下方查看实时计算结果");
+
+        }
+
+        //获取当前单元格
+        function getcor() {
+            var str1 = "当前列号：" + zcell1.GetSheet(0).GetCurrentColNo() + ",行号：" + zcell1.GetSheet(0).GetCurrentRowNo();
+            alert(str1);
+        }
+
+        //获取表 行数，列数
+        function getrccount() {
+            var str1 = "总列数：" + zcell1.GetSheet(0).GetCols() + ",总行数：" + zcell1.GetSheet(0).GetRows();
+            alert(str1);
+        }
+
+        //获取选定单元格，返回JSON串
+        function getselcells() {
+
+            alert(zcell1.GetSheet(0).GetSelectCellsJson());
+        }
+
+        //保存并退出编辑状态
+        function endedit() {
+            zcell1.SaveEdit();
+        }
+
+
+
+
+
+        function editdata() {
+
+            alert("我是ZCELL自定义编辑事件");
+            return;
+
+        }
+        function summitfun() {
+
+            alert("我是ZCELL自定义按钮触发事件");
+
+        }
+
+        function hidestabar() {
+
+            alert("注意只有授权版本可用隐藏状态栏");
+            zcell1.SetStatusBar(0);
+
+
+        }
+
+
+        function delsheet() {
+            alert("表格销毁时删除表格所有元素");
+            zcell1.DeleteSheet(0);
+        }
+
+        function initsheet() {
+
+            zcell1.InserSheet(0, 10, 22);
+        }
+
+        //插入列
+        function insercol() {
+            zcell1.GetSheet(0).InsertCol(5, 2);
+        }
+
+        //删除列
+        function delcol() {
+            zcell1.GetSheet(0).DeleteCol(1, 2);
+
+        }
+
+        //插入行
+        function insertrow() {
+            zcell1.GetSheet(0).InsertRow(4, 2);
+        }
+
+        //删除行
+        function delrow() {
+            zcell1.GetSheet(0).DeleteRow(3, 2);
+
+        }
+
+        //追加列
+        function appendcol() {
+            zcell1.GetSheet(0).AppendCol(2);
+        }
+
+        //追加行
+        function appendrow() {
+            zcell1.GetSheet(0).AppendRow(2);
+        }
+
+        //隐藏列
+        function hidecol() {
+            zcell1.GetSheet(0).SetColHidden(9, 10);
+
+        }
+
+        //取消隐藏列
+        function unhidecol() {
+            zcell1.GetSheet(0).SetColUnHidden(9, 10);
+        }
+
+        //隐藏行
+        function hiderow() {
+            zcell1.GetSheet(0).SetRowHidden(1, 2);
+        }
+
+        //取消隐藏行
+        function unhiderow() {
+            zcell1.GetSheet(0).SetRowUnHidden(1, 2);
+        }
+
+
+
+        //设置为手工计算公式
+        function unautocalcu() {
+            zcell1.GetSheet(0).AllowAutoCalculate = false;
+
+            alert("已取消自动计算，界面公式不再自动计算，请手动调用计算API计算公式");
+
+        }
+
+        //设置为手工计算公式
+        function manualcalcu() {
+            zcell1.GetSheet(0).ManualCalculateSheet();
+
+        }
+
+
+        //合并单元格
+        function merge() {
+            //合并单元格
+            zcell1.GetSheet(0).MergeCells(2, 4, 2, 5);
+            zcell1.GetSheet(0).MergeCells(3, 4, 3, 5);
+            zcell1.GetSheet(0).MergeCells(4, 4, 6, 4);
+
+        }
+
+        //取消合并单元格
+        function unmerge() {
+            zcell1.GetSheet(0).SplitCell(2, 4);
+            zcell1.GetSheet(0).SplitCell(3, 4);
+            zcell1.GetSheet(0).SplitCell(4, 4);
+
+
+
+        }
+
+
+
+    </script>
+</head>
+<body>
+
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+    <!--<table border="1">-->
+    <!--<tr>-->
+    <!--<td><button class="button button2" onClick="getselcells()">获取选定单元格</button></td>-->
+    <!--&lt;!&ndash;<td><button class="button button2" onClick="getval1()">获取单元格文本</button></td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td><button class="button button2" onClick="comput()">实时计算</button></td>&ndash;&gt;-->
+    <!--</tr>-->
+    <!--</table>-->
+
+    <div id="cellContainer" style="width:1200px;height:650px;  border:1px solid #DDECFE; overflow:hidden;"  >
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+首先，统计个数要用到collections模块的Counter类。如图所示，将要统计的对象作为构造参数传入，即得到一个Counter，打印如图。
+
+collections模块的Counter类
+

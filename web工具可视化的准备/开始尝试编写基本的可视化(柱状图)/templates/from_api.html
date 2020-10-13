@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8"><link rel="icon" href="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* css 代码  */
+        </style>
+    <script src="../static/js/jquery-1.8.3.min.js"></script>
+    <script src="../static/js/highstock.js"></script>
+    <script src="../static/js/exporting.js"></script>
+   <script src="../static/js/highcharts-zh_CN.js"></script>
+    </head>
+    <body>
+        <div id="container" style="min-width:400px;height:400px" width=80px></div>
+        <script>
+
+
+$.getJSON('http://127.0.0.1:5000/js',function (content) {
+    dt = content.data;
+
+    var chart = Highcharts.chart('container',{
+    chart: {
+        type: 'column'
+    },
+    
+    title: {
+        text: '大数据展示线变异常数据'
+    },
+    credits: { enabled: false}, //  去掉Higchart的图标
+    subtitle: {
+        text: '来自Oracle92'
+    },
+    xAxis: {
+        categories:['银川市', '石嘴山市', '吴忠市', '固原市', '中卫市'],
+
+        crosshair: true, //　这里是一个坑啊！一定要true!
+
+    },
+    // xAxis: [
+
+    //         type: 'category',
+    //         data: ['银川市', '石嘴山市', '吴忠市', '固原市', '中卫市'],
+    //         axisTick: {
+    //             alignWithLabel: true
+    //         }
+    //     }
+    // ],
+    yAxis: {
+        min: 0,
+        title: {
+            text: '异常数据的出现次数'
+        }
+    },
+    // tooltip: {
+    //     // head + 每个 point + footer 拼接成完整的 table
+    //     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+    //     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //     '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+    //     footerFormat: '</table>',
+    //     shared: true,
+    //     useHTML: true
+    // },
+    plotOptions: {
+        column: {
+            borderWidth: 0
+        }
+    },
+    series: [
+        {
+            name: '拓扑校验明细各区市情况',
+            data:dt,
+            colorByPoint:true, 　// 颜色不同
+
+        }
+    ]
+});
+})
+
+
+
+
+
+
+
+
+
+        </script>
+    </body>
+</html>

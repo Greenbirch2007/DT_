@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 加载 Jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- 加载 Datatables -->
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<table style="text-align: center;" id="accountSwitchTable" class="table table-bordered table-striped">
+    <colgroup>
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="20%">
+        <col width="15%">
+        <col width="10%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th style="text-align: center;">合作伙伴</th>
+        <th style="text-align: center;">账单号</th>
+        <th style="text-align: center;">账单生成时间</th>
+        <th style="text-align: center;">创建人机构</th>
+        <th style="text-align: center;">创建人</th>
+        <th style="text-align: center;">账单金额</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<script>
+    var accountSwitch = {}
+    accountSwitch.init = function () {
+    }
+    accountSwitch.init.prototype = {
+
+        //获得地址url
+        getContextPath : function(locate) {
+            return document.location.protocol + "//" + document.location.hostname + ":" + document.location.port + "/" + locate;
+        },
+
+        initTable: function () {
+            $('#goodsUpperAndLowerTable').DataTable({
+                "bServerSide": true, //需要向后端传jqueryDataTablesVo数据,是否启动服务器端数据导入
+                "searching": false, //是否启用搜索
+                "sPaginationType": "full_numbers",// 分页，一共两种样式,一种full_numbers 另一种为two_button // 是datatables默认
+                "bPaginate": true, //翻页功能 分页按钮
+                "bLengthChange": true,//是否允许终端用户从一个选择列表中选择分页的页数，页数为10，25，50和100，需要分页组件bPaginate的支持
+                "aLengthMenu": [5, 10, 20, 50, 100, 200],//需要bLengthChange设为true
+                "bFilter": false,//是否对数据进行过滤，搜索栏
+                "bSort": false,//是否开启列排序
+                "bInfo": true,//是否显示表格信息，是指当前页面上显示的数据的信息，如果有过滤操作执行，也会显示过滤操作的信息
+                "bAutoWidth": true,//是否自动计算列宽，计算列宽会花费一些时间，如果列宽通过aoColumns传递，可以关闭该属性作为优化
+                "bWidth": true,
+                "bStateSave": true,//是否开启状态保存，当选项开启的时候会使用一个cookie保存表格展示的信息的状态，例如分页信息，展示长度，过滤和排序等,这样当终端用户重新加载这个页面的时候可以使用以前的设置
+                "bJQueryUI": true,//是否开启jQuery UI ThemeRoller支持
+                //"bProcessing":true,//DataTables载入数据时，是否显示‘进度’提示因为找不到图片js会报错
+                "iDisplayLength": 10,//单页显示的数据的条数
+                /*
+                 * bScrollCollapse
+                 * 默认为false
+                 * 当垂直滚动被允许的时候，DataTable会强制表格视图在任何时候都是给定的高度（对布局有利）
+                 * 不过，当把数据集过滤到十分小的时候看起来会很古怪，而且页脚会留在最下面
+                 * 当结果集的高度比给定的高度小时该参数会使表格高度自适应
+                 */
+                "bScrollCollapse": true,
+                "bDestroy": true,//使用传递的新的初始化对象中的属性构造一个新的表格，并替换一个匹配指定的选择器的表格
+                "bSortCellsTop": true,//是否允许DataTable使用顶部（默认为true）的单元格，或者底部（默认为false）的单元格，当使用复合表头的时候会有些用处
+                "sAjaxSource": STATIC_CTX + "/goodsUpperAndLower/goodsUpperAndLower",//该参数用来向DataTable指定加载的外部数据源(如果想使用现有的数据，请使用aData),可以简单的提供一个可以用来获得数据url或者JSON对象，该对象必须包含aaData，作为表格的数据源
+                //"sScrollX": "100%",//默认为空字符串，即：无效,是否开启水平滚动
+                //"sScrollY": "100%",//默认为空字符串，即：无效,是否开启垂直滚动
+                "aaSorting": [
+                    [4, "desc"]  //指定按多列数据排序的根据
+                ],
+                "sDom": 'rt<"row"<"col-xs-2a"i><"col-xs-8a"p><"col-xs-2b"l>>',//自定义布局,样式自己设置
+                //自定义语言设置
+                "oLanguage": {
+                    "sLengthMenu": "每页显示 _MENU_ 条记录",
+                    "sZeroRecords": "抱歉， 没有找到",
+                    "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                    "sInfoEmpty": "没有数据",
+                    "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "前一页",
+                        "sNext": "后一页",
+                        "sLast": "尾页"
+                    },
+                    "sZeroRecords": "没有检索到数据",
+                    "sProcessing": "<img src='./loading.gif' />",
+                    "sSearch": "搜索"
+                },
+                //当表格被初始化后调用该函数，通常DataTable会被持续初始化，并不需要该函数,可是，当使用异步的XmlHttpRequest从外部获得语言信息时，初始化并不是持续的
+                "fnInitComplete": function () {
+                    this.fnAdjustColumnSizing(true);
+                },
+                //自定义页面跳转
+                "fnDrawCallback": function (table) {
+                    //指定跳转页面
+                    $("#accountSwitchTable_paginate").append("<input  class='margin text-center paginput pipt' id='changePage' type='text'> 页  <a class='btn btn-default shiny pagbtn' style='margin-bottom:5px' href='javascript:void(0);' id='dataTable-btn'>跳转</a>");
+                    var oTable = $("#accountSwitchTable").dataTable();
+                    $('#dataTable-btn').click(function (e) {
+                        if ($("#changePage").val() && $("#changePage").val() > 0) {
+                            var redirectpage = $("#changePage").val() - 1;
+                        } else {
+                            var redirectpage = 0;
+                        }
+                        oTable.fnPageChange(redirectpage);
+                    });
+                },
+                //向服务器传额外的参数
+                "fnServerParams": function (aoData) {
+                    var biddingCode = $('#biddingCode').val();
+                    var confETime = $('#confEndTime').val();
+                    aoData.push({
+                        "name": "biddingCode",
+                        "value": biddingCode
+                    }, {
+                        "name": "confETime",
+                        "value": confETime
+                    });
+                },
+                //定义列
+                "aoColumns": [
+                    {
+                        "data": "indexNum",
+                        "render": function (data) {
+                            if (data == null) {
+                                return "";
+                            } else {
+                                return data;
+                            }
+                        }
+                    },
+                    {
+                        "data": "isPreferred",
+                        "render": function (data) {
+                            if (data == null) {
+                                return "";
+                            } else {
+                                return data;
+                            }
+                        }
+                    }
+                ],
+                //隐藏第一列 aoColumnDefs设置列的属性时，可以任意指定列，并且不需要给所有列都设置。
+                /*"aoColumnDefs":[
+                    {
+                        "sClass":"or",
+                        "aTargets":[0],
+                        "data":"operations",
+                        "mRender":function(a,b,c,d){//id，c表示当前记录行对象
+                            return '';
+                        }
+                    }
+                ],*/
+                //这个是结合服务器模式的回调函数，用来向服务器传额外的参数并且处理服务器返回过来的数据
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    //序列化表格的数据，固定写法
+                    var serializeData = function (aoData) {
+                        var data = {};
+                        for (var i = 0; i < aoData.length; i++) {
+                            var dd = aoData[i];
+                            if (dd['value']) {
+                                data[dd['name']] = dd['value'];
+                            }
+                        }
+                        return $.param(data);
+                    };
+                    //向服务器传递数据并处理返回回来的数据，sSource固定写法
+                    $.ajax({
+                        "type": 'post',
+                        "url": sSource,
+                        "data": serializeData(aoData),
+                        "success": function (resp) {
+                            if (resp.status) {
+                                fnCallback(resp);   //fnCallback()渲染表格()括号里面放请求回来的数据
+                            } else {
+                                window.wxc.xcConfirm(resp.resultMessage, "info");
+                            }
+                            var total = $("td");
+                            if (total.size() < 2 && searchFlag) {
+                                // window.wxc.xcConfirm("很抱歉，系统找不到您的记录，请换个条件试试！", "info");
+                            }
+                        },
+                        "error": function () {
+                            showMessage({message: "系统出错，请重新登陆"});
+                        }
+                    });
+                }
+            });
+        }
+    }
+    $(function () {
+        var obj = new accountSwitch.init();
+        obj.initTable();
+    })
+
+
+</script>
+</body>
+</html>

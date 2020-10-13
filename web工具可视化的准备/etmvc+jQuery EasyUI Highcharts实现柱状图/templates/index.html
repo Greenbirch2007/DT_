@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8"><link rel="icon" href="https://jscdn.com.cn/highcharts/images/favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            /* css 代码  */
+        </style>
+        <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+        <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+        <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+    </head>
+    <body>
+
+        <div style="padding:5px;">
+            <fieldset>
+             <div>
+                <div style="margin: 0 1px">
+                <div id="containerliuliang" style="min-width: 368px; height: 368px; margin: 0 auto"></div>
+                </div>
+             </div>
+            </fieldset>
+
+
+
+<script type="text/javascript">
+        /*获取json数据开始*/
+        //定义变量
+        $(document).ready(function () {
+            var jsonXData = [];
+            var jsonyD1 = [];
+            var jsonyD2 = [];
+          //获取数据
+            $.ajax({ url: 'http://localhost:5000/dataapi',
+                cache: false,
+                async: false,
+                success: function (data) {
+                    var json = eval("(" + data + ")");
+                    if (json.Rows.length > 0) {
+                        for (var i = 0; i < json.Rows.length; i++) {
+                            var rows = json.Rows[i];
+                            var Year = rows.year;
+                            var ShouldPay = rows.shouldPay;
+                            var TruePay = rows.truePay;
+                            jsonXData.push(Year); //赋值
+                            jsonyD1.push(ShouldPay);
+                            jsonyD2.push(TruePay);
+                        } //for
+                        var chart;
+                        chart = new Highcharts.Chart({
+                            chart: {
+                                renderTo: 'containerliuliang',//放置图表的容器
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                defaultSeriesType: 'column'   //图表类型line, spline, area, areaspline, column, bar, pie , scatter 
+                            },
+                            title: {
+                                text: '近年会费缴纳情况',
+                                style: { font: 'normal 13px 宋体' }
+                            },
+                            xAxis: {//X轴数据
+                                categories: jsonXData,
+                                lineWidth: 2,
+                                labels: {
+                                    rotation: -45, //字体倾斜
+                                    align: 'right',
+                                    style: { font: 'normal 13px 宋体' }
+                                }
+                            },
+                            yAxis: {//Y轴显示文字
+                                lineWidth: 2,
+                                title: {
+                                    text: '金额/万元'
+                                }
+                            },
+                            tooltip: {
+                                formatter: function () {
+                                    return '<b>' + this.x + '</b><br/>' +
+    					            this.series.name + ': ' + this.y+'万元';
+                                }
+                            },
+                            plotOptions: {
+                                column: {
+                                    dataLabels: {
+                                        enabled: true
+                                    },
+                                    enableMouseTracking: true//是否显示title
+                                }
+                            },
+                            series: [{
+                                name: '应缴',
+                                data: jsonyD1
+                            }, {
+                                name: '实缴',
+                                data: jsonyD2
+                            }]
+                        });
+                        //$("tspan:last").hide(); //把广告删除掉
+                    } //if
+                }
+            });
+        });
+
+
+        </script>
+    </body>
+</html>
+
+
+
+

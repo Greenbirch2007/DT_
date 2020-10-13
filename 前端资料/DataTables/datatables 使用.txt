@@ -1,0 +1,91 @@
+datatables 使用
+
+https://blog.csdn.net/qq_30118843/article/details/82844258
+
+
+分页：上一页，下一页，页面导航
+即时搜索：通过文本搜索过滤结果
+多列排序：一次按多列对数据排序
+几乎可以使用任何数据源：dom,javascript,ajax,服务器端处理
+轻松主题化：DataTables主题创建者，Bootstrap3/4,Foundation和Semantic UI
+种类繁多的扩展：编辑器，按钮，相应
+
+移动友好：表适应视口大小
+完全国际化：轻松将DataTables翻译成多种语言
+
+二、使用
+
+1. 引入相关js和css文件
+2.添加html代码
+3. 初始化Datatables
+
+4.效果
+
+三，常用选项囊
+
+
+1.order :应用于表的初始顺序(排序)
+2.stateSave：状态保存-页面重新加载时恢复表状态
+启用或禁用状态保存。启用后，DataTables将存储状态信息，
+例如分页状态，显示长度，过滤和排序。
+当最终用户重新加载页面时，表的状态将被更改以匹配他们之前设置的状态
+
+
+3. columnDefs
+
+设置列定义初始化属性
+此参数允许你为表中的列指定选项，但在这种情况下，定义的列选项
+可应用一个或多个列
+
+
+4.lengthMenu
+定义在每页显示记录数的select中显示的选项
+
+5.paging
+是否允许表格分页true/false
+默认：true
+
+
+6.info
+
+控制是否显示表格的信息 true/false
+默认：true
+
+
+7.searching
+
+是否允许Datatables开启本地搜索 true/false
+默认：true
+
+8.ordering
+
+是否允许Datatables开启排序 true/false
+默认：true
+9.processing
+
+是否显示正在处理的状态 true/false
+
+默认：false
+
+四、ajax 使用远程数据
+
+DataTables的服务器端处理功能提供了一种方法，可以让服务器端的数据
+库引擎完成所有繁重的工作
+
+
+
+当使用服务器端处理时，Datatables将在页面上每次绘制信息向服务器发出ajax
+请求(即，在分页，排序，搜索等时)DataTables将向服务器发送许多变量，
+以允许它执行所需的处理，然后以DataTables所需的格式返回数据
+
+
+
+1.客户端
+2. 服务端
+3.搜索
+
+
+datatable 对象.api().ajax.reload()
+重新加载数据
+
+

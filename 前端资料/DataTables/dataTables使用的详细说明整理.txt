@@ -1,0 +1,420 @@
+
+
+dataTables使用的详细说明整理
+
+
+https://www.cnblogs.com/wxh0929/p/11124449.html
+
+
+一、官方网站：http://www.datatables.club/
+
+二、基本使用：
+
+1.dataTable的引入及初始化
+
+<!--第一步：引入Javascript / CSS （CDN）-->
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+ 
+<!-- jQuery -->
+<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+ 
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+　　
+
+<!--第三步：初始化Datatables-->
+$(document).ready( function () {
+    $('#example').DataTable();
+} );
+
+
+2.dataTable的基础属性配置
+
+翻页功能，改变每页显示数据数量，过滤功能，排序功能，页脚信息，自动宽度
+
+
+
+"bPaginate": true, //翻页功能
+"bLengthChange": true, //改变每页显示数据数量
+"bFilter": true, //过滤功能
+"bSort": false, //排序功能
+"bInfo": true,//页脚信息
+"bAutoWidth": true//自动宽度
+
+
+
+3.关于排序的四个属性区分
+
+
+bSort:初始化的时候可以定义整个表格是否需要进行排序
+
+
+$(document).ready( function () {
+  $('#example').dataTable( {
+    "bSort": false
+  } );
+} );
+
+aaSorting:初始化的时候可以用来定义表格根据哪一列进行排序
+
+
+$(document).ready( function() {
+  $('#example').dataTable( {//先对第二列降序排列，在对第四列升序排列
+    "aaSorting": [[1,'desc'], [3,'asc']]
+  } );
+} );
+
+bSortable:初始化的时候可以用来定义哪一列可以进行排序
+
+
+$(document).ready( function() {
+  $('#example').dataTable( {
+    "aoColumns": [ 
+      { "bSortable": false },
+      null,
+      null,
+      null,
+      null
+    ] } );
+} );
+
+
+
+aaSorting:可以用来设置某一行的排序规则
+
+
+$(document).ready( function() {
+  $('#example').dataTable( {
+    "aoColumns": [
+      null,
+      { "asSorting": [ "asc" ] },
+      { "asSorting": [ "desc", "asc", "asc" ] },
+      { "asSorting": [ "desc" ] },
+      null
+    ]
+  } );
+} );
+
+
+4.展示一个表格的基本配置
+
+是否使用jquery的ui theme
+
+DataTables载入数据时，是否显示'进度'提示
+是否启动服务器端数据导入，也就是调用后台数据的时候
+是否开发客户端状态记录功能，此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
+详细分页组，可以支持直接跳转到某夜
+是否启动初始化滚动条
+是否开启DataTable的高度自适应，当数据条不够分页的条数的时候，插件高度
+是否岁数据条数而改变
+
+翻页功能
+
+更改显示记录数选项
+默认显示的记录数
+规定表格高度，出现滚动条
+是否开启水平滚动，以及指定滚动区域带下，可设定值"disabled"“2000%”
+改变每页显示数据数量
+
+过滤功能
+排序功能，初始化的时候定义整个表格是否进行排序
+页脚信息，即表格左下角显示多少数据的提示
+自动宽度，false为禁止自动计算列宽
+bSort失效
+
+
+国际化配置
+正在加载中...
+每页显示_MENU_条记录
+对不起，查询不到相关数据！
+表中无数据存在！
+当前显示 _START_ 到 _END_条，共 _TOTAL_ 条记录
+数据表中共为 _MAX_条记录
+
+
+搜索
+首页
+上一页
+下一页
+末页
+
+
+
+5. 使用ajax与后台交互数据时，将bServerSide属性设置为true,涉及属性fnServerDate
+
+"sAjaxSource": "url",//接口路径
+        "fnServerData": function (sUrl, aoData, fnCallback) {
+            $.ajax({
+                "url": sUrl,
+                "type": 'POST',
+                "dataType": 'json',
+                "contentType": "application/x-www-form-urlencoded; charset=utf-8",
+                "cache": false,
+                "data": aoData,
+                "success": (res) => {
+                    //console.log(res.data.data)
+                    fnCallback(res.data.data)
+                }
+            })
+        }
+
+
+三、实例展示
+
+1.引入文件
+
+2.创建js文件
+
+ var iDisplayStart = 0;
+    var iDisplayLength = 6;
+
+    $('#tableList').dataTable({
+        "bJQueryUI": true,//是否使用jquery中的ui theme
+        "bProcessing": true, //DataTables载入数据时，是否显示‘进度’提示 
+        "bServerSide": true, //是否启动服务器端数据导入,也就是调用后台数据的时候
+        "bStateSave": false, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态   
+        "sPaginationType": "full_numbers",//详细分页组，可以支持直接跳转到某页 
+        "bScrollInfinite": false, //是否启动初始化滚动条  
+        "bScrollCollapse": false, //是否开启DataTables的高度自适应，当数据条数不够分页数据条数的时候，插件高度是否随数据条数而改变 
+        "bPaginate": true, //翻页功能
+        // "aLengthMenu": [5, 10, 15], //更改显示记录数选项
+        // "iDisplayLength": 9, //默认显示的记录数
+        // "sScrollY": 100,//规定表格高度，出现滚动条
+        // "sScrollX": "50%",////是否开启水平滚动，以及指定滚动区域大小,可设值：'disabled','2000%'
+        // "bLengthChange": true, //改变每页显示数据数量
+        "bFilter": false, //过滤功能
+        "bSort": false, //排序功能，初始化的时候定义整个表格是否进行排序
+        "bInfo": false,//页脚信息，即表格左下角显示多少条数据的提示
+        "bAutoWidth": true,//自动宽度，false为禁止自动计算列宽
+        // 'aaSorting': [[2, 'asc']],//bSort失效
+        "iDisplayStart": iDisplayStart,
+        "iDisplayLength": iDisplayLength,//默认显示的记录数
+        // "aaData": [
+        //     {
+        //     }
+        // ],
+        "columns": [//sClass设置列的class属性值，bSearchable设置列的数据是否过滤，bVisible设置列是否显示，sTitle设置列的标题
+            // {bVisible表示不再表格中显示
+            //     "data": "caseId", 'sTitle': '序号', 'sWidth': '8%', 'sClass': 'center', "bVisible": false, "bSortable": false, "bUseRendered": false
+            // },
+            {
+                "data": "caseId", 'sTitle': '序号', 'sWidth': '2%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "caseName", 'sTitle': '案件名称', 'sWidth': '20%', 'sClass': 'text-center', "sDefaultContent": "", "bSortable": false, "bUseRendered": false //此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错 
+            },
+            {
+                "data": "caseCode", 'sTitle': '序号', 'sWidth': '14%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "caseCauseName", 'sTitle': '原因', 'sWidth': '8%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "underTakerName", 'sTitle': '收押人', 'sWidth': '8%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "managerName", 'sTitle': '管理人员', 'sWidth': '8%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {
+                "data": "registerDate", 'sTitle': '日期', 'sWidth': '8%', 'sClass': 'text-center', "bSortable": false, "bUseRendered": false
+            },
+            {//自定义列
+                "mDataProp": "userType",
+                'sTitle': '登录用户角色',
+                'sWidth': '10%',
+                'sClass': 'text-center',
+                // "fnRender": function (oObj) {
+                //     if (oObj.aData.userType == '1' || oObj.aData.userType == '3') {
+                //         return '用户'
+                //     } else {
+                //         return '管理员'
+                //     }
+                // },
+                "bSortable": false,
+                "bUseRendered": false
+            },
+            {
+                "sDefaultContent": "",
+                'sTitle': '操作',
+                'sWidth': '7%',
+                'sClass': 'text-center',
+                "render": function (data, type, full) { // 返回自定义内容  
+                    return "<span  id='factorConfirm' style='display:inline-block;color:#01d1b8;text-decoration:underline;padding-bottom:3px;cursor:pointer'>跳转按钮</span>";
+                }
+            }
+        ],
+        "fnRowCallback": function (nRow, aData, iDisplayIndex) {//格式化数据
+            //iDisplayIndex指当前行的序号   每行加载完成，将当前列进行替换
+            if (aData.userType == '1' || aData.userType == '3') {
+                $('td:eq(7)', nRow).html('用户');
+            } else {
+                $('td:eq(7)', nRow).html('管理员');
+            }
+            return nRow;
+        },
+        "oLanguage": {//国际化配置
+            "sProcessing": "正在加载中......",
+            "sLengthMenu": "每页显示 _MENU_ 条记录",
+            "sZeroRecords": "对不起，查询不到相关数据！",
+            "sEmptyTable": "表中无数据存在！",
+            "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+            "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+            "sSearch": "搜索",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上一页",
+                "sNext": "下一页",
+                "sLast": "末页"
+            }
+        },
+        "sAjaxSource": requestUrl,//接口路径
+        "fnServerData": function (sUrl, aoData, fnCallback) {
+            $.ajax({
+                "url": sUrl,
+                "type": 'GET',
+                "dataType": 'json',
+                "dataSrc": '',
+                "contentType": "application/x-www-form-urlencoded; charset=utf-8",
+                "cache": false,
+                "data": aoData,
+                "sDom": "frtlip",
+                "sPaginationType": "full_numbers",
+                "success": (res) => {
+               
+                    //处理返回的数据
+                    fnCallback(handleData(res)); //处理返回的数据
+
+                    // 点击跳转按钮
+                    $("#factorConfirm").on('click', function (e) {
+        //获取本行数据(对象）
+                        var currentData = $('#tableList').DataTable().row($(this).parents('tr')).data();
+                        window.location.href = window.location.origin + '/html/ceshi.html?name=' + name + "&age=" + age
+                    });
+                },
+                "error": function (xhr, error, thrown) {
+                    top.showInfoWinError("发生异常:" + error);
+                }
+            })
+        }
+    });
+    function handleData(json) { // 处理返回的数据
+        var obj = { code: 1 };
+        obj.iTotalDisplayRecords = obj.iTotalRecords = json.body.data.length;
+        obj.aaData = json.body.data;
+        return obj;
+    }              
+
+
+
+四、遇到的问题
+
+1.设置列睡醒'sClass':"text-center",每列的内容无法居中，样式失效
+
+解决方法：引入bootstrap的js、css
+
+<!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8"
+src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+
+
+2.与后台交互的时候，设置了 iDisplayLength 属性为6，属性失效
+
+解决方法：
+设置翻页属性为true,否则不起作用
+
+'bPaginate':true,//翻页功能
+
+
+3. 当后台数据返回数值型1,2等数字，需要在表格内进行格式化内容
+
+解决方法：
+
+设置与columns属性同级的fnRowCallback属性进行列内容格式化
+
+
+格式化数据
+iDisplayIndex指当前行的序号   每行加载完成，将当前列进行替换
+
+复制代码
+设置与columns属性同级的fnRowCallback属性进行列内容格式化
+
+"fnRowCallback": function (nRow, aData, iDisplayIndex) {//格式化数据
+ //iDisplayIndex指当前行的序号   每行加载完成，将当前列进行替换
+    if (aData.userType == '1' || aData.userType == '3') {
+         $('td:eq(7)', nRow).html('用户');
+       } else {
+         $('td:eq(7)', nRow).html('管理员');
+       }
+       return nRow;
+ }
+
+4. 需要在每行一列操作列，即后台没有返回该属性，我们需要自定义列
+
+
+解决方法
+
+不是data属性
+
+
+{
+     "sDefaultContent": "",//不是data属性
+     'sTitle': '操作',
+     'sWidth': '7%',
+     'sClass': 'text-center',
+     "render": function (data, type, full) { // 返回自定义内容  
+           return "<span  id='factorConfirm' style='display:inline-block;color:#01d1b8;text-decoration:underline;
+　　                padding-bottom:3px;cursor:pointer'>要素确认</span>";
+     }
+}
+
+
+5.后台返回数据后，如何处理才能显示到表格中
+
+
+
+解决方法
+
+
+复制代码
+function handleData(json) { // 处理返回的数据
+     var obj = { code: 1 };
+     obj.iTotalDisplayRecords = obj.iTotalRecords = json.body.data.length;
+     obj.aaData = json.body.data;
+     return obj;
+ }
+
+//success成功后，调用函数
+fnCallback(handleData(res))
+
+
+
+6. 原生JS中，通过url传值，解析参数
+
+复制代码
+function parseURL(url) {
+   var url = url.split("?")[1];
+   var para = url.split("&");
+   var len = para.length;
+   var res = {};
+   var arr = [];
+   for (var i = 0; i < len; i++) {
+      arr = para[i].split("=");
+      res[arr[0]] = arr[1];
+   }
+      return res;
+}
+复制代码
+

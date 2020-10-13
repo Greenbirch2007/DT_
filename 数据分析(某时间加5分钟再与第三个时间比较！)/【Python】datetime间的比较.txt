@@ -1,0 +1,38 @@
+【Python】datetime间的比较
+
+https://blog.csdn.net/tiantuanzi/article/details/70226413
+
+1.string转datetime
+
+#字符串转datetime
+dt = datetime.datetime.strptime('2017-04-19 00:42:44','%Y-%m-%d %H:%M:%S')
+
+2.datetime转string
+
+#datetime转字符串
+str = dt.strftime("%Y-%m-%d-%H")
+
+3.datetime的比较
+>>> dt1 = datetime.datetime.strptime('2017-04-18 00:40:00','%Y-%m-%d %H:%M:%S')
+>>> dt2 = datetime.datetime.strptime('2017-04-18 00:20:00','%Y-%m-%d %H:%M:%S')
+>>> print(dt1 - dt2)
+0:20:00
+>>> print(dt2 - dt1)
+-1 day, 23:40:00
+可以看到，当用较小的时间减较大的时间时，得出的是-1天，23时40分。而不是-20分。
+4.datetime比较结果的判断
+
+>>> diff = dt2 - dt1
+>>> print(diff)
+-1 day, 23:40:00
+>>> print(diff.days)
+-1
+>>> print(diff.seconds)
+85200
+即比较时要用diff.days比较，小于0则前者较小。
+5.具体相差秒数
+
+>>> diff.days * 86400 + diff.seconds
+-1200
+
+

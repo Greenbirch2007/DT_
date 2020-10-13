@@ -1,0 +1,5 @@
+
+
+
+
+pyinstaller -F -i  /home/w/Recodt1/excel_/resizeApi.png  /home/w/Recodt1/excel_/excel_l_wins.py

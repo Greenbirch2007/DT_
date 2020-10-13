@@ -1,0 +1,25 @@
+http://www.datatables.club/
+
+
+Datatables中文网
+
+博客
+例子
+
+0配置
+DataTables布局（dom定位）
+垂直滚动条（jQuery-ui 风格）
+各种分页风格
+DataTable各种状态缓存
+开启/关闭DataTables功能
+垂直滚动条
+水平滚动条、动态高度
+水平和垂直滚动条
+复杂表头（rowspan 和 colspan）
+一个页面初始化多个表格
+多列同时排序
+表格宽度自适应
+数字格式化（国际化）
+语言国际化
+设置隐藏列
+设置默认排序的列

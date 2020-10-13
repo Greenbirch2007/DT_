@@ -1,0 +1,56 @@
+
+
+
+1. 把for 循环，变为 使用并行进行for循环
+
+
+并行进行for循环是受下面的方法启发：
+我之前的做法类似这样：
+
+   words = ['apple', 'bananan', 'cake', 'dumpling']
+   for word in words:
+       print word
+
+1
+2
+3
+4
+并行for循环类似这样：
+
+from multiprocessing.dummy import Pool as ThreadPool
+items = list()
+pool = ThreadPool()
+pool.map(process, items)
+pool.close()
+pool.join()
+
+1
+2
+3
+4
+5
+6
+7
+其中,process是进行处理的函数
+实例代码如下：
+
+# -*- coding: utf-8 -*-
+import time
+from multiprocessing.dummy import Pool as ThreadPool
+def process(item):
+   print('正在并行for循环')
+   print(item)
+    time.sleep(5)
+items = ['apple', 'bananan', 'cake', 'dumpling']
+pool = ThreadPool()
+pool.map(process, items)
+pool.close()
+pool.join()
+
+
+2 . 优化遍历方式，比如enumate, map，字典
+
+
+3. 用python调用更底层数据 ，go,C，C++
+
+

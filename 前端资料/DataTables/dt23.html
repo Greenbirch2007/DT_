@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!----------Hhtml dataset-------->
+    <!-- 加载 Jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- 加载 Datatables -->
+    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <!--    <link href="./c2.css" rel="stylesheet" />-->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Office</th>
+        <th>Age</th>
+        <th>Start date</th>
+        <th>Salary</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Office</th>
+        <th>Age</th>
+        <th>Start date</th>
+        <th>Salary</th>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr>
+        <td data-search="Tiger Nixon">T. Nixon</td>
+        <td>System Architect</td>
+        <td>Edinburgh</td>
+        <td>61</td>
+        <td data-order="1303686000">Mon 25th Apr 11</td>
+        <td data-order="320800">$320,800/y</td>
+    </tr>
+    <tr>
+        <td data-search="Garrett Winters">G. Winters</td>
+        <td>Accountant</td>
+        <td>Tokyo</td>
+        <td>63</td>
+        <td data-order="1311548400">Mon 25th Jul 11</td>
+        <td data-order="170750">$170,750/y</td>
+    </tr>
+    <tr>
+        <td data-search="Ashton Cox">A. Cox</td>
+        <td>Junior Technical Author</td>
+        <td>San Francisco</td>
+        <td>66</td>
+        <td data-order="1231718400">Mon 12th Jan 09</td>
+        <td data-order="86000">$86,000/y</td>
+    </tr>
+    <tr>
+        <td data-search="Cedric Kelly">C. Kelly</td>
+        <td>Senior Javascript Developer</td>
+        <td>Edinburgh</td>
+        <td>22</td>
+        <td data-order="1332975600">Thu 29th Mar 12</td>
+        <td data-order="433060">$433,060/y</td>
+    </tr>
+    <tr>
+        <td data-search="Airi Satou">A. Satou</td>
+        <td>Accountant</td>
+        <td>Tokyo</td>
+        <td>33</td>
+        <td data-order="1227830400">Fri 28th Nov 08</td>
+        <td data-order="162700">$162,700/y</td>
+    </tr>
+    <tr>
+        <td data-search="Brielle Williamson">B. Williamson</td>
+        <td>Integration Specialist</td>
+        <td>New York</td>
+        <td>61</td>
+        <td data-order="1354406400">Sun 2nd Dec 12</td>
+        <td data-order="372000">$372,000/y</td>
+    </tr>
+    <tr>
+        <td data-search="Herrod Chandler">H. Chandler</td>
+        <td>Sales Assistant</td>
+        <td>San Francisco</td>
+        <td>59</td>
+        <td data-order="1344207600">Mon 6th Aug 12</td>
+        <td data-order="137500">$137,500/y</td>
+    </tr>
+    <tr>
+        <td data-search="Rhona Davidson">R. Davidson</td>
+        <td>Integration Specialist</td>
+        <td>Tokyo</td>
+        <td>55</td>
+        <td data-order="1287010800">Thu 14th Oct 10</td>
+        <td data-order="327900">$327,900/y</td>
+    </tr>
+    <tr>
+        <td data-search="Colleen Hurst">C. Hurst</td>
+        <td>Javascript Developer</td>
+        <td>San Francisco</td>
+        <td>39</td>
+        <td data-order="1252969200">Tue 15th Sep 09</td>
+        <td data-order="205500">$205,500/y</td>
+    </tr>
+    <tr>
+        <td data-search="Sonya Frost">S. Frost</td>
+        <td>Software Engineer</td>
+        <td>Edinburgh</td>
+        <td>23</td>
+        <td data-order="1229126400">Sat 13th Dec 08</td>
+        <td data-order="103600">$103,600/y</td>
+    </tr>
+    <tr>
+        <td data-search="Jena Gaines">J. Gaines</td>
+        <td>Office Manager</td>
+        <td>London</td>
+        <td>30</td>
+        <td data-order="1229644800">Fri 19th Dec 08</td>
+        <td data-order="90560">$90,560/y</td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function() {
+        $('#example').dataTable();
+    });
+</script>
+</body>
+</html>

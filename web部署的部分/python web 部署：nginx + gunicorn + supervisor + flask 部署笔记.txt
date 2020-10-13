@@ -1,0 +1,5 @@
+python web 部署：nginx + gunicorn + supervisor + flask 部署笔记
+
+
+
+https://mp.weixin.qq.com/s?__biz=MzA3OTgyMDcwNg==&mid=211062260&idx=1&sn=68f2a2d4eb58b68d9b5a60c793d69bee&chksm=16cd8f3921ba062f1e9549408a5ec6d9640dc389d47a5b17a0f3538d236367fde6be7451c59f&mpshare=1&scene=1&srcid=1108dfLpGwFXnst0dJzvAYYh&sharer_sharetime=1573159000270&sharer_shareid=5baeb4516dc33f60573dd0b37ccd54cf&pass_ticket=vHWMggG6nJ4Bn1iHsgk8SJn1APyNP77r%2FPcgeOVTFu%2BAGYm3ij06IAw1d8bDE0Oc#rd
